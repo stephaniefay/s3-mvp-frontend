@@ -1,12 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, signal} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {Drawer} from 'primeng/drawer';
+import {Button} from 'primeng/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Drawer, Button],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('s3-mvp-frontend');
+  protected readonly title = signal('MyWish');
+  visible:boolean = false;
+
+
+  openMenu () {
+    this.visible = true;
+  }
 }
