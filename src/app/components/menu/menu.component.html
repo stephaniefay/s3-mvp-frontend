@@ -1,0 +1,50 @@
+<p-drawer [(visible)]="visible" [fullScreen]="isMobileDevice()" [style]="{width:'25vw'}">
+  <ng-template #header>
+    <div style="width: 100%">
+      @if (loadUser() != null) {
+        <div class="flex justify-content-between">
+          <div class="flex align-items-center">
+            <div class="flex justify-content-around">
+              <p-avatar class="mr-2" size="xlarge" shape="circle" [image]="user?.image"/>
+              <p class="text-xl">{{ this.user?.nickname }}</p>
+            </div>
+          </div>
+          <div class="flex align-items-center">
+            <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" pTooltip="Logout" tooltipPosition="bottom"/>
+          </div>
+        </div>
+      }
+    </div>
+  </ng-template>
+  <p-menu [model]="items" class="flex justify-center" styleClass="w-full">
+    <ng-template #submenuheader let-item>
+      <span class="text-primary font-bold">{{ item.label }}</span>
+    </ng-template>
+    <ng-template #item let-item>
+      <a pRipple class="flex items-center p-menu-item-link">
+        <span [class]="item.icon"></span>
+        <span class="ml-2">{{ item.label }}</span>
+        @if (item.badge) {
+          <p-badge class="ml-auto" [value]="item.badge" />
+        }
+
+        @if (item.shortcut) {
+          <span class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">
+                {{ item.shortcut }}
+            </span>
+        }
+      </a>
+    </ng-template>
+    <ng-template #end>
+    </ng-template>
+  </p-menu>
+  <ng-template #footer>
+    FOOTER
+  </ng-template>
+</p-drawer>
+
+<div class="center">
+  <div class="padding">
+    <p-button (click)="openMenu()" [icon]="loadIcon()"/>
+  </div>
+</div>
