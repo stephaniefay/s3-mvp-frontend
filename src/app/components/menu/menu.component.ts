@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {Drawer} from "primeng/drawer";
 import {Button} from 'primeng/button';
 import {AuthenticationService} from '../../services/auth/authentication.service';
@@ -7,8 +7,10 @@ import {Avatar} from 'primeng/avatar';
 import {Tooltip} from 'primeng/tooltip';
 import {Menu} from 'primeng/menu';
 import {Badge} from 'primeng/badge';
-import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
+import {MenuItem} from 'primeng/api';
 import {Router} from '@angular/router';
+import {ToggleSwitch} from 'primeng/toggleswitch';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +20,9 @@ import {Router} from '@angular/router';
     Avatar,
     Tooltip,
     Badge,
-    Menu
+    Menu,
+    ToggleSwitch,
+    FormsModule
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
@@ -34,8 +38,13 @@ export class MenuComponent {
   noAuthItems: MenuItem[] = [];
   authItems: MenuItem[] = [];
 
+  isDarkMode = signal(false);
+
   constructor(private auth: AuthenticationService,
               private router: Router) {
+    const theme = localStorage.getItem('theme');
+    this.isDarkMode.set(theme == 'dark');
+
     this.loginItem = {
       label: 'Account',
       items: [
@@ -155,5 +164,12 @@ export class MenuComponent {
 
     // Combine user agent and touch support checks
     return (mobileRegex.test(userAgent) || tabletRegex.test(userAgent)) && hasTouchScreen;
+  }
+
+  toggleDarkMode() {
+    const element = document.querySelector('html');
+    element?.classList.toggle('dark');
+    this.isDarkMode.set(!this.isDarkMode());
+    localStorage.setItem('theme', this.isDarkMode() ? 'dark' : 'light');
   }
 }

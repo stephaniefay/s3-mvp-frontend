@@ -39,7 +39,13 @@
     </ng-template>
   </p-menu>
   <ng-template #footer>
-    FOOTER
+    <div style="width: 100%">
+      <div class="flex justify-content-center align-items-center gap-2">
+        <i class="pi pi-sun"></i>
+        <p-toggleswitch [ngModel]="isDarkMode()" (ngModelChange)="toggleDarkMode()"></p-toggleswitch>
+        <i class="pi pi-moon"></i>
+      </div>
+    </div>
   </ng-template>
 </p-drawer>
 

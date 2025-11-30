@@ -10,4 +10,12 @@ import {MenuComponent} from './components/menu/menu.component';
 })
 export class App {
   protected readonly title = signal('MyWish');
+
+  constructor() {
+    const theme = localStorage.getItem('theme');
+    const element = document.querySelector('html');
+    if (theme == 'dark') {
+      element?.classList.toggle('dark');
+    }
+  }
 }
