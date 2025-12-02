@@ -46,5 +46,8 @@ export class SetsPage implements OnInit {
 
   filterSets() {
     this.filteredSets = [... this.filterService.filter(this.sets, ['name', 'id'], this.searchedTerm, 'contains')];
+    if (this.selectedSet != null && this.filteredSets.indexOf(this.selectedSet) < 0) {
+      this.selectedSet = undefined;
+    }
   }
 }
