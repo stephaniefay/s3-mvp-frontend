@@ -1,0 +1,34 @@
+<p-card>
+  <div class="grid">
+    <div class="col-2 text-center align-center-grid">
+      <div class="img-container">
+        <img [src]="set.images.symbol" [alt]="set?.id">
+      </div>
+    </div>
+    <div class="col-6 align-center-grid">
+      <div class="flex flex-column align-items-start">
+        <span class="text-xl">
+          {{set.name}}
+        </span>
+        <span class="text-l">
+          {{set.id}}
+        </span>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="text-center">
+        <div class="flex flex-column gap-1">
+          @if (set.legalities.standard) {
+            <p-tag value="Standard" severity="success"></p-tag>
+          }
+          @if (set.legalities.expanded) {
+            <p-tag value="Expanded" severity="info"></p-tag>
+          }
+          @if (set.legalities.unlimited) {
+            <p-tag value="Unlimited" severity="danger"></p-tag>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</p-card>

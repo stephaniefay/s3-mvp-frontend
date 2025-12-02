@@ -1,0 +1,16 @@
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-container {
+  height: 30vh;
+}
+
+.img-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+}

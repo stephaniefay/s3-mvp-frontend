@@ -1,30 +1,39 @@
 import {Routes} from '@angular/router';
-import {Sets} from './pages/sets/sets';
-import {Trades} from './pages/trades/trades';
-import {Market} from './pages/market/market';
-import {Collections} from './pages/collections/collections';
-import {Wishlists} from './pages/wishlists/wishlists';
+import {SetsPage} from './pages/sets/sets-page.component';
+import {TradesPage} from './pages/trades/trades-page.component';
+import {MarketPage} from './pages/market/market-page.component';
+import {CollectionsPage} from './pages/collections/collections-page.component';
+import {WishlistsPage} from './pages/wishlists/wishlists-page.component';
+import {SetsInfoPage} from './pages/sets-info/sets-info-page';
 
 
 export const routes: Routes = [
   {
     path: '',
-    component: Sets
+    component: SetsPage
+  },
+  {
+    path: 'sets',
+    component: SetsPage
+  },
+  {
+    path: 'sets/:id',
+    component: SetsInfoPage
   },
   {
     path: 'trades',
-    component: Trades
+    component: TradesPage
   },
   {
     path: 'market',
-    component: Market
+    component: MarketPage
   },
   {
     path: 'collections/:id',
-    component: Collections
+    component: CollectionsPage
   },
   {
     path: 'wishlists/:id',
-    component: Wishlists
+    component: WishlistsPage
   }
 ];

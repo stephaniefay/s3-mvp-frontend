@@ -2,12 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'app-collections',
+  selector: 'app-wishlists',
   imports: [],
-  templateUrl: './collections.html',
-  styleUrl: './collections.css',
+  templateUrl: './wishlists-page.component.html',
+  styleUrl: './wishlists-page.component.css',
 })
-export class Collections implements OnInit {
+export class WishlistsPage implements OnInit {
   userId: string | null = null;
 
   constructor(private route: ActivatedRoute) {

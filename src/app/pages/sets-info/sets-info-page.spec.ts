@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Collections } from './collections';
+import { SetsInfoPage } from './sets-info-page';
 
-describe('Collections', () => {
-  let component: Collections;
-  let fixture: ComponentFixture<Collections>;
+describe('SetsInfoPage', () => {
+  let component: SetsInfoPage;
+  let fixture: ComponentFixture<SetsInfoPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Collections]
+      imports: [SetsInfoPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Collections);
+    fixture = TestBed.createComponent(SetsInfoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

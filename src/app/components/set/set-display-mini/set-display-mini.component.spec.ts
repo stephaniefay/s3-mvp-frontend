@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Market } from './market';
+import { SetDisplayMiniComponent } from './set-display-mini.component';
 
-describe('Market', () => {
-  let component: Market;
-  let fixture: ComponentFixture<Market>;
+describe('SetDisplayMini', () => {
+  let component: SetDisplayMiniComponent;
+  let fixture: ComponentFixture<SetDisplayMiniComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Market]
+      imports: [SetDisplayMiniComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Market);
+    fixture = TestBed.createComponent(SetDisplayMiniComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Trades } from './trades';
+import { SetDisplayFullComponent } from './set-display-full.component';
 
-describe('Trades', () => {
-  let component: Trades;
-  let fixture: ComponentFixture<Trades>;
+describe('SetDisplayFull', () => {
+  let component: SetDisplayFullComponent;
+  let fixture: ComponentFixture<SetDisplayFullComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Trades]
+      imports: [SetDisplayFullComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Trades);
+    fixture = TestBed.createComponent(SetDisplayFullComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
