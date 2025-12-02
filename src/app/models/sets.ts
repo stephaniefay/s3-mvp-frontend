@@ -1,5 +1,5 @@
 import {Legalities} from './legalities';
-import {Images} from './images';
+import {SetImage} from './images';
 
 export interface Sets {
   id: string,
@@ -11,5 +11,5 @@ export interface Sets {
   ptcgoCode: string,
   releaseDate: string,
   updatedAt: string,
-  images: Images
+  images: SetImage
 }

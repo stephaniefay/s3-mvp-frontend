@@ -1,0 +1,158 @@
+<div class="flex justify-content-between align-items-center">
+  <p-breadcrumb [model]="items" [home]="home"/>
+</div>
+
+@if (card) {
+  <div class="grid">
+    <div class="col-4">
+      <img [src]="card.images.large" [alt]="card.name">
+    </div>
+    <div class="col-8">
+      <div #header class="flex justify-content-between align-items-center">
+        <span class="text-5xl">{{ card.name }}</span>
+        <div class="flex align-items-center gap-5 pr-2">
+          @if (card.supertype.startsWith('Pok')) {
+            <div>
+              <span class="text-l">HP: </span>
+              <span class="text-2xl">{{ card.hp }}</span>
+            </div>
+            @for (type of card.types; track type) {
+              <div [class]="'type ' + type.toLowerCase()">
+                <img [src]="'/types/' + type.toLowerCase() + '.svg'" [alt]="type">
+              </div>
+            }
+          } @else if (card.supertype.startsWith('Trainer')) {
+            <span class="text-2xl">
+              {{ card.subtypes }}
+            </span>
+          }
+        </div>
+      </div>
+      <div #subheader class="flex justify-content-between align-items-center">
+        @if (card.evolvesFrom) {
+          <span class="text-xl pr-2 text-color-secondary">
+            Evolves from: {{ card.evolvesFrom }}
+            @for (subtype of card.subtypes; track subtype) {
+              @if (subtype.startsWith("Stage")) {
+                ({{ subtype }})
+              }
+            }
+          </span>
+        }
+
+        <span class="text-xl pr-2 text-color-secondary">
+          Artist: {{ card.artist }}
+        </span>
+      </div>
+      <p-divider></p-divider>
+      @if (card.abilities) {
+        <div #abilities class="pt-4">
+          @for (ability of card.abilities; track ability) {
+            <div class="flex justify-items-start align-items-center">
+              <img [src]="'/abilities/' + getImageAbility(ability) + '.png'" [alt]="ability.type" class="ability-type">
+              <span class="text-2xl">{{ ability.name }}</span>
+            </div>
+            <span class="text-xl">{{ ability.text }}</span>
+          }
+        </div>
+
+        <p-divider></p-divider>
+      }
+      @if (card.attacks) {
+        <div #attacks class="pt-2">
+          @for (attack of card.attacks; track attack) {
+            <div class="pt-2">
+              <div class="flex align-items-center justify-content-between">
+                <div class="flex align-items-center justify-content-start">
+                  @for (cost of attack.cost; track $index) {
+                    <div [class]="'type ' + cost.toLowerCase()">
+                      <img [src]="'/types/' + cost.toLowerCase() + '.svg'" [alt]="cost">
+                    </div>
+                  }
+                  <div class="text-2xl pl-4">{{ attack.name }}</div>
+                </div>
+                <div class="text-2xl pr-4">
+                  {{ attack.damage }}
+                </div>
+              </div>
+              <div class="text-xl pt-2">
+                {{ attack.text }}
+              </div>
+            </div>
+          }
+        </div>
+        <p-divider></p-divider>
+      }
+
+      @if (card.rules) {
+        <div #ruleBox class="pt-2">
+          @for (rule of card.rules; track $index) {
+            <div class="text-2xl pt-1">{{ rule }}</div>
+          }
+        </div>
+        <p-divider></p-divider>
+      }
+
+      @if (card.weaknesses || card.resistances || card.retreatCost) {
+        <div #info class="grid pt-2 grid-center">
+          <div class="col-3">
+            <div #weakness class="flex justify-content-between align-items-center">
+              <span class="text-lg">Weaknesses: </span>
+              <div class="flex flex-column">
+                @for (weakness of card.weaknesses; track $index) {
+                  <div class="flex align-content-end align-items-center">
+                    <div [class]="'type ' + weakness.type.toLowerCase()">
+                      <img [src]="'/types/' + weakness.type.toLowerCase() +'.svg'">
+                    </div>
+                    <div class="pl-4 text-2xl">{{ weakness.value }}</div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+          <p-divider [layout]="'vertical'"></p-divider>
+          <div class="col-3">
+            <div #resistances class="flex justify-content-between align-items-center">
+              <span class="text-lg">Resistances: </span>
+              <div class="flex flex-column">
+                @for (resistance of card.resistances; track $index) {
+                  <div class="flex align-content-end">
+                    <div [class]="'type ' + resistance.type.toLowerCase()">
+                      <img [src]="'/types/' + resistance.type.toLowerCase() +'.svg'">
+                    </div>
+                    <div class="pl-4 text-2xl">{{ resistance.value }}</div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+          <p-divider [layout]="'vertical'"></p-divider>
+          <div class="col-4">
+            <div #retreat class="flex justify-content-between align-items-center">
+              <span class="text-lg">Retreat: </span>
+              <div class="flex">
+                @for (retreat of card.retreatCost; track $index) {
+                  <div [class]="'type ' + retreat.toLowerCase()">
+                    <img [src]="'/types/' + retreat.toLowerCase() +'.svg'">
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <p-divider></p-divider>
+      }
+
+      @if (this.user) {
+        <div class="flex justify-content-end gap-2 pr-5">
+          <p-button icon="pi pi-heart" [rounded]="true" [text]="true" severity="warn" pTooltip="Add to Collection"
+                    tooltipPosition="bottom" size="large"/>
+          <p-button icon="pi pi-sparkles" [rounded]="true" [text]="true" severity="info" pTooltip="Add to Wishlist"
+                    tooltipPosition="bottom" size="large"/>
+        </div>
+      }
+    </div>
+  </div>
+} @else {
+  Nothing to show
+}

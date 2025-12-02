@@ -1,0 +1,13 @@
+.col-2 img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+}
+
+img:hover {
+  transform: scale(1.2);
+  -webkit-filter: grayscale(0);
+  filter: none;
+  cursor: pointer;
+}

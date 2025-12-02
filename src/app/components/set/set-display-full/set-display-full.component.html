@@ -33,7 +33,7 @@
       </div>
       <ng-template #footer>
         <div class="text-center">
-          <p-button icon="pi pi-search" label="See Cards" [routerLink]="getLink()"></p-button>
+          <p-button icon="pi pi-search" label="See Cards" [routerLink]="getLink()" [queryParams]="{name: set.name}"></p-button>
         </div>
       </ng-template>
     </p-card>

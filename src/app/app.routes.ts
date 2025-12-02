@@ -5,6 +5,7 @@ import {MarketPage} from './pages/market/market-page.component';
 import {CollectionsPage} from './pages/collections/collections-page.component';
 import {WishlistsPage} from './pages/wishlists/wishlists-page.component';
 import {SetsInfoPage} from './pages/sets-info/sets-info-page';
+import {CardPage} from './pages/card/card-page';
 
 
 export const routes: Routes = [
@@ -19,6 +20,10 @@ export const routes: Routes = [
   {
     path: 'sets/:id',
     component: SetsInfoPage
+  },
+  {
+    path: 'cards/:id',
+    component: CardPage
   },
   {
     path: 'trades',
