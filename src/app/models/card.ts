@@ -9,6 +9,25 @@ import {CardImage} from './images';
 import {TCGPlayer} from './tcgplayer';
 import {Cardmarket} from './cardmarket';
 
+export enum Condition {
+  M = "Mint",
+  NM = "Near Mint",
+  SP = "Slightly Played",
+  MP = "Moderately Played",
+  HP = "Heavily Played",
+  D = "Damaged"
+}
+
+export enum Languages {
+  BR = "Português",
+  EN = "English",
+  ES = "Español",
+  IT = "Italiano",
+  JP = "日本語",
+  CN = "中国人",
+  KO = "한국인"
+}
+
 export interface Cards {
   id: string;
   name: string;
@@ -37,4 +56,24 @@ export interface Cards {
   images: CardImage;
   tcgplayer?: TCGPlayer;
   cardmarket?: Cardmarket;
+}
+
+export interface CollectionCard {
+  id: string;
+  collectionId: string;
+  card: Cards;
+  quantity: number;
+  language: string;
+  condition: Condition;
+  tags: string[];
+}
+
+export interface WishlistCard {
+  id: string;
+  wishlistId: string;
+  card: Cards;
+  quantity: number;
+  language: string;
+  condition: Condition;
+  tags: string[];
 }

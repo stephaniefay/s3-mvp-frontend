@@ -9,6 +9,8 @@ import {AuthenticationService} from '../../services/auth/authentication.service'
 import {User} from '../../models/user';
 import {Button} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
+import {DialogService} from 'primeng/dynamicdialog';
+import {DynamicDialogComponent} from '../../components/dynamic-dialog/dynamic-dialog-component';
 
 @Component({
   selector: 'app-card-page',
@@ -18,6 +20,7 @@ import {Tooltip} from 'primeng/tooltip';
     Button,
     Tooltip
   ],
+  providers: [DialogService],
   templateUrl: './card-page.html',
   styleUrl: './card-page.css',
 })
@@ -29,7 +32,8 @@ export class CardPage implements OnInit {
   home: MenuItem | undefined;
 
   constructor(private router: Router,
-              private auth: AuthenticationService) {
+              private auth: AuthenticationService,
+              private dialog: DialogService) {
     const navigation: Navigation | null = this.router.currentNavigation();
     if (navigation) {
       const state = navigation.extras.state;
@@ -40,7 +44,6 @@ export class CardPage implements OnInit {
         this.items = [... data['breadcrumb']];
 
         this.items.push({ label:  this.card?.name, routerLink: '../../cards/' + this.card?.id, state: state })
-        console.log(this.card)
       }
     }
 
@@ -63,5 +66,27 @@ export class CardPage implements OnInit {
     }
 
     return this.user;
+  }
+
+  addToWishlist() {
+    this.dialog.open(DynamicDialogComponent, {
+      header: 'Add To Wishlist',
+      width: '50%',
+      contentStyle: { overflow: 'visible' },
+      baseZIndex: 10000,
+      closable: true,
+      data: {type: 'wishlist', card: this.card}
+    });
+  }
+
+  addToCollection() {
+    this.dialog.open(DynamicDialogComponent, {
+      header: 'Add To Collection',
+      width: '50%',
+      contentStyle: { overflow: 'visible' },
+      baseZIndex: 10000,
+      closable: true,
+      data: {type: 'collection', card: this.card}
+    });
   }
 }

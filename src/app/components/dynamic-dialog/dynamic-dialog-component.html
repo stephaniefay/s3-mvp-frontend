@@ -1,0 +1,54 @@
+<div class="grid">
+  <div class="col-6">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        @if (this.placeholder == 'Collection') {
+          <i class="pi pi-tablet"></i>
+        } @else {
+          <i class="pi pi-star"></i>
+        }
+      </p-inputgroup-addon>
+      <p-select [(ngModel)]="selectedCollWish" [options]="getOptionsWishColl()" optionLabel="name"
+                [placeholder]="placeholder"/>
+    </p-inputgroup>
+  </div>
+  <div class="col-6">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-hashtag"></i>
+      </p-inputgroup-addon>
+      <input pInputText [(ngModel)]="selectedQuantity" placeholder="Quantity"/>
+    </p-inputgroup>
+  </div>
+  <div class="col-6">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-wave-pulse"></i>
+      </p-inputgroup-addon>
+      <p-select [(ngModel)]="selectedCondition" [options]="getConditions()" placeholder="Condition"/>
+    </p-inputgroup>
+  </div>
+  <div class="col-6">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-language"></i>
+      </p-inputgroup-addon>
+      <p-select [(ngModel)]="selectedLanguage" [options]="getLanguages()" placeholder="Language"/>
+    </p-inputgroup>
+  </div>
+  <div class="col-6">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-tags"></i>
+      </p-inputgroup-addon>
+      <p-multiselect [(ngModel)]="selectedTags" [options]="tags" optionLabel="name" placeholder="Tags">
+      </p-multiselect>
+    </p-inputgroup>
+  </div>
+</div>
+<p-divider></p-divider>
+<div class="flex gap-2 justify-content-end">
+  <p-button severity="secondary" (onClick)="dismiss()">Cancelar</p-button>
+
+  <p-button (onClick)="save()">Salvar</p-button>
+</div>

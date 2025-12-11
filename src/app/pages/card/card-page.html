@@ -146,9 +146,9 @@
       @if (this.user) {
         <div class="flex justify-content-end gap-2 pr-5">
           <p-button icon="pi pi-heart" [rounded]="true" [text]="true" severity="warn" pTooltip="Add to Collection"
-                    tooltipPosition="bottom" size="large"/>
+                    tooltipPosition="bottom" size="large" (click)="addToCollection()"/>
           <p-button icon="pi pi-sparkles" [rounded]="true" [text]="true" severity="info" pTooltip="Add to Wishlist"
-                    tooltipPosition="bottom" size="large"/>
+                    tooltipPosition="bottom" size="large" (click)="addToWishlist()"/>
         </div>
       }
     </div>

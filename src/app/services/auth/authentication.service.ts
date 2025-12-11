@@ -10,7 +10,14 @@ export class AuthenticationService {
     this.token = localStorage.getItem('token'); // Retrieve token on service initialization
   }
 
-  login (accessKey: string, password: string): boolean {
+  signUp (name: string, accessKey: string, password: string): true {
+    console.log(name, accessKey, password);
+
+    this.setToken('asd');
+    return true;
+  }
+
+  signIn (accessKey: string, password: string): boolean {
     //TODO
     console.log(accessKey, password);
 
@@ -19,8 +26,8 @@ export class AuthenticationService {
   }
 
   getUser () {
-//    return null;
-    return {id: 'teste_id_usuario', email: 'all@all.com', nickname: 'sfay', token: 'asd'}
+    return null;
+//    return {id: 'teste_id_usuario', email: 'all@all.com', nickname: 'sfay', token: 'asd'}
   }
 
   setToken(token: string): void {

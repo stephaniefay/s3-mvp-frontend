@@ -6,6 +6,7 @@ import {CollectionsPage} from './pages/collections/collections-page.component';
 import {WishlistsPage} from './pages/wishlists/wishlists-page.component';
 import {SetsInfoPage} from './pages/sets-info/sets-info-page';
 import {CardPage} from './pages/card/card-page';
+import {Login} from './pages/login/login';
 
 
 export const routes: Routes = [
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: 'wishlists/:id',
     component: WishlistsPage
+  },
+  {
+    path: 'login',
+    component: Login
   }
 ];

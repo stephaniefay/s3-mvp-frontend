@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Sets} from '../../models/sets';
 import {Observable} from 'rxjs';
 import {Cards} from '../../models/card';
+import {Tags} from '../../models/tags';
 
 @Injectable({
   providedIn: 'root',
@@ -22,4 +23,7 @@ export class CardsService {
     return this.http.get<Cards[]>(this.baseUrl + id + '.json');
   }
 
+  loadTags() {
+    return this.http.get<Tags[]>(this.baseUrl + 'tags.json');
+  }
 }

@@ -7,7 +7,7 @@ import {Avatar} from 'primeng/avatar';
 import {Tooltip} from 'primeng/tooltip';
 import {Menu} from 'primeng/menu';
 import {Badge} from 'primeng/badge';
-import {MenuItem} from 'primeng/api';
+import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
 import {Router} from '@angular/router';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {FormsModule} from '@angular/forms';
@@ -46,14 +46,18 @@ export class MenuComponent {
     this.isDarkMode.set(theme == 'dark');
 
     this.loginItem = {
-      label: 'Account',
-      items: [
-        {
-          label: 'Login',
-          icon: 'pi pi-sign-in',
-        }
-      ]
-    };
+        label: 'Account',
+        items: [
+          {
+            label: 'Login',
+            icon: 'pi pi-sign-in',
+            command: ()=>  {
+              this.visible = false;
+              this.router.navigate(['/login']);
+            }
+          }
+        ]
+      };
 
     this.noAuthItems = [
       {
@@ -67,23 +71,23 @@ export class MenuComponent {
               this.router.navigate(['/']);
             }
           },
-          {
-            label: 'Trades',
-            icon: 'pi pi-arrow-right-arrow-left',
-            routerLink: '/trades',
-            command: () => {
-              this.visible = false;
-              this.router.navigate(['/trades'])
-            }
-          },
-          {
-            label: 'Market',
-            icon: 'pi pi-wallet',
-            command: () => {
-              this.visible = false;
-              this.router.navigate(['/market'])
-            }
-          }
+          // {
+          //   label: 'Trades',
+          //   icon: 'pi pi-arrow-right-arrow-left',
+          //   routerLink: '/trades',
+          //   command: () => {
+          //     this.visible = false;
+          //     this.router.navigate(['/trades'])
+          //   }
+          // },
+          // {
+          //   label: 'Market',
+          //   icon: 'pi pi-wallet',
+          //   command: () => {
+          //     this.visible = false;
+          //     this.router.navigate(['/market'])
+          //   }
+          //}
         ]
       }
     ];
@@ -117,7 +121,7 @@ export class MenuComponent {
     this.visible = true;
   }
 
-  loadNoUserMenu () {
+  loadNoUserMenu() {
     this.items = [];
     this.items.push(this.loginItem);
     this.noAuthItems.forEach(item => {
@@ -125,7 +129,7 @@ export class MenuComponent {
     });
   }
 
-  loadUserMenu () {
+  loadUserMenu() {
     this.items = [];
     this.noAuthItems.forEach(item => {
       this.items.push(item);
@@ -135,7 +139,7 @@ export class MenuComponent {
     });
   }
 
-  loadUser (): User | null {
+  loadUser(): User | null {
     if (this.user == null) {
       this.user = this.auth.getUser();
     }

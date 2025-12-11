@@ -1,0 +1,51 @@
+<div class="grid pt-8">
+  <div class="col-3"></div>
+  <div class="col-6">
+    <div #container class="container">
+      <div class="form-container sign-up-container">
+        <form (submit)="signUp()">
+          <h1>Create Account</h1>
+          <div class="social-container">
+            <a href="#" class="social"><i class="pi pi-facebook"></i></a>
+            <a href="#" class="social"><i class="pi pi-google"></i></a>
+            <a href="#" class="social"><i class="pi pi-linkedin"></i></a>
+          </div>
+          <span>or use your email for registration</span>
+          <input pInputText [(ngModel)]="name" name="name" placeholder="Name"/>
+          <input pInputText [(ngModel)]="username" name="username" placeholder="username"/>
+          <input pInputText [(ngModel)]="password" type="password" name="password" placeholder="password"/>
+          <p-button (onClick)="signUp()">Sign Up</p-button>
+        </form>
+      </div>
+      <div #signInContainer class="form-container sign-in-container">
+        <form (submit)="signIn()">
+          <h1>Sign in</h1>
+          <div class="social-container">
+            <a href="#" class="social"><i class="pi pi-facebook"></i></a>
+            <a href="#" class="social"><i class="pi pi-google"></i></a>
+            <a href="#" class="social"><i class="pi pi-linkedin"></i></a>
+          </div>
+          <span>or use your account</span>
+          <input pInputText [(ngModel)]="username" name="username" placeholder="username"/>
+          <input pInputText [(ngModel)]="password" type="password" name="password" placeholder="password"/>
+          <p-button (onClick)="signIn()">Sign In</p-button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p>To keep connected with us please login with your personal info</p>
+            <p-button (onClick)="changeOverlay(false)">Sign In</p-button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start journey with us</p>
+            <p-button (onClick)="changeOverlay(true)">Sign Up</p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3"></div>
+</div>
