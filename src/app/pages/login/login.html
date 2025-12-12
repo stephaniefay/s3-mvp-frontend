@@ -1,3 +1,7 @@
+@if (showLoading) {
+  <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" ></p-progressBar>
+}
+
 <div class="grid pt-8">
   <div class="col-3"></div>
   <div class="col-6">
@@ -6,8 +10,9 @@
         <form (submit)="signUp()">
           <h1>Create Account</h1>
           <span>or use your email for registration</span>
-          <input pInputText [(ngModel)]="name" name="name" placeholder="Name"/>
+          <input pInputText [(ngModel)]="name" name="name" placeholder="name"/>
           <input pInputText [(ngModel)]="username" name="username" placeholder="username"/>
+          <input pInputText [(ngModel)]="email" name="email" placeholder="email">
           <input pInputText [(ngModel)]="password" type="password" name="password" placeholder="password"/>
           <p-button (onClick)="signUp()">Sign Up</p-button>
         </form>

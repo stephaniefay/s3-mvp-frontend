@@ -1,7 +1,7 @@
 import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {LoginResponse} from '../../models/login-response';
+import {LoginResponse, RegisterResponse} from '../../models/login-response';
 import {User} from '../../models/user';
 import {MessageService} from 'primeng/api';
 
@@ -37,11 +37,28 @@ export class AuthenticationService {
     }
   }
 
-  signUp(name: string, accessKey: string, password: string): true {
-    console.log(name, accessKey, password);
-
-    this.setToken('asd');
-    return true;
+  signUp(name: string, email: string, accessKey: string, password: string) {
+    this.http.post<RegisterResponse>(this._baseUrl + '/create', {
+      name: name,
+      email: email,
+      username: accessKey,
+      password: password
+    }).subscribe({
+      next: user => {
+        if (user) {
+          this.messageService.add({severity: 'success', summary: 'User signed up successfully.'});
+          if (user.token) {
+            this.setToken(user.token)
+            this.loadUser();
+          } else {
+            this.messageService.add({severity: 'info', summary: 'You can login now'});
+          }
+        }
+      },
+      error: error => {
+        this.messageService.add({severity: 'error', summary: 'Sign up failed', detail: error.statusText})
+      }
+    })
   }
 
   signIn(accessKey: string, password: string) {
