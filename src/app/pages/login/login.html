@@ -5,11 +5,6 @@
       <div class="form-container sign-up-container">
         <form (submit)="signUp()">
           <h1>Create Account</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="pi pi-facebook"></i></a>
-            <a href="#" class="social"><i class="pi pi-google"></i></a>
-            <a href="#" class="social"><i class="pi pi-linkedin"></i></a>
-          </div>
           <span>or use your email for registration</span>
           <input pInputText [(ngModel)]="name" name="name" placeholder="Name"/>
           <input pInputText [(ngModel)]="username" name="username" placeholder="username"/>
@@ -20,12 +15,7 @@
       <div #signInContainer class="form-container sign-in-container">
         <form (submit)="signIn()">
           <h1>Sign in</h1>
-          <div class="social-container">
-            <a href="#" class="social"><i class="pi pi-facebook"></i></a>
-            <a href="#" class="social"><i class="pi pi-google"></i></a>
-            <a href="#" class="social"><i class="pi pi-linkedin"></i></a>
-          </div>
-          <span>or use your account</span>
+          <div class="pt-2"></div>
           <input pInputText [(ngModel)]="username" name="username" placeholder="username"/>
           <input pInputText [(ngModel)]="password" type="password" name="password" placeholder="password"/>
           <p-button (onClick)="signIn()">Sign In</p-button>

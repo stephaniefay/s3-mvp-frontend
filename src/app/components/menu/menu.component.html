@@ -5,12 +5,12 @@
         <div class="flex justify-content-between">
           <div class="flex align-items-center">
             <div class="flex justify-content-around">
-              <p-avatar class="mr-2" size="xlarge" shape="circle" [image]="user?.image"/>
-              <p class="text-xl">{{ this.user?.nickname }}</p>
+              <p-avatar class="mr-2" size="xlarge" shape="circle" [image]="user.image"/>
+              <p class="text-xl">{{ this.user.nickname }}</p>
             </div>
           </div>
           <div class="flex align-items-center">
-            <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" severity="danger" pTooltip="Logout" tooltipPosition="bottom"/>
+            <p-button icon="pi pi-sign-out" [rounded]="true" [text]="true" (click)="logout()" severity="danger" pTooltip="Logout" tooltipPosition="bottom"/>
           </div>
         </div>
       }

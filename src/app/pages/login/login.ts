@@ -1,9 +1,8 @@
-import {Component, ElementRef, Renderer2, ViewChild} from '@angular/core';
+import {Component, effect, ElementRef, inject, Renderer2, ViewChild} from '@angular/core';
 import {Button} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
 import {AuthenticationService} from '../../services/auth/authentication.service';
-import {MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 
 @Component({
@@ -25,30 +24,26 @@ export class Login {
   password: string | undefined;
 
   name: string | undefined;
+  service = inject(AuthenticationService);
+
+  logEffect = effect(() => {
+    const user = this.service.user();
+    if (user) {
+      this.router.navigate(['/']);
+    }
+  });
 
   constructor(private renderer: Renderer2,
-              private service: AuthenticationService,
-              private messageService: MessageService,
               private router: Router) {
+    console.log(this.service.user());
+    if (this.service.user()) {
+      this.router.navigate(['/']);
+    }
   }
 
   signIn() {
     if (this.username && this.password) {
-      this.service.signIn(this.username, this.password).subscribe({
-        next: (data) => {
-          if (data.token) {
-            localStorage.setItem('token', data.token);
-
-            this.router.navigate(['/']);
-          }
-        },
-        error: (error) => {
-          console.error('An error occurred:', error.error.error);
-
-          this.messageService.add({severity: 'error', summary: 'Login failed', detail: error.error.error});
-        },
-        complete: () => {}
-      });
+      this.service.signIn(this.username, this.password);
     }
   }
 

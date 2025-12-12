@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, effect, inject, signal} from '@angular/core';
 import {Drawer} from "primeng/drawer";
 import {Button} from 'primeng/button';
 import {AuthenticationService} from '../../services/auth/authentication.service';
@@ -7,7 +7,7 @@ import {Avatar} from 'primeng/avatar';
 import {Tooltip} from 'primeng/tooltip';
 import {Menu} from 'primeng/menu';
 import {Badge} from 'primeng/badge';
-import {MenuItem, MenuItemCommandEvent, MessageService} from 'primeng/api';
+import {MenuItem} from 'primeng/api';
 import {Router} from '@angular/router';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {FormsModule} from '@angular/forms';
@@ -27,7 +27,7 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent {
   visible: boolean = false;
 
   user: User | null = null;
@@ -39,26 +39,35 @@ export class MenuComponent implements OnInit {
   authItems: MenuItem[] = [];
 
   isDarkMode = signal(false);
+  service = inject(AuthenticationService);
 
-  constructor(private auth: AuthenticationService,
-              private router: Router,
-              private messageService: MessageService) {
+  logEffect = effect(() => {
+    const user = this.service.user();
+    if (user) {
+      this.user = user;
+      this.loadUserMenu()
+    } else {
+      this.loadNoUserMenu();
+    }
+  });
+
+  constructor(private router: Router) {
     const theme = localStorage.getItem('theme');
     this.isDarkMode.set(theme == 'dark');
 
     this.loginItem = {
-        label: 'Account',
-        items: [
-          {
-            label: 'Login',
-            icon: 'pi pi-sign-in',
-            command: ()=>  {
-              this.visible = false;
-              this.router.navigate(['/login']);
-            }
+      label: 'Account',
+      items: [
+        {
+          label: 'Login',
+          icon: 'pi pi-sign-in',
+          command: () => {
+            this.visible = false;
+            this.router.navigate(['/login']);
           }
-        ]
-      };
+        }
+      ]
+    };
 
     this.noAuthItems = [
       {
@@ -101,10 +110,6 @@ export class MenuComponent implements OnInit {
     ]
   }
 
-  ngOnInit() {
-    this.loadUser();
-  }
-
   openMenu() {
     this.visible = true;
   }
@@ -125,24 +130,6 @@ export class MenuComponent implements OnInit {
     this.authItems.forEach(item => {
       this.items.push(item);
     });
-  }
-
-  loadUser() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.auth.getUser().subscribe({
-        next: user => {
-          this.user = user;
-          this.loadUserMenu();
-        },
-        error: error => {
-          console.log(error);
-          this.messageService.add({severity: 'error', summary: error.error});
-        }
-      })
-    } else {
-      this.loadNoUserMenu();
-    }
   }
 
   loadIcon() {
@@ -172,5 +159,10 @@ export class MenuComponent implements OnInit {
     element?.classList.toggle('dark');
     this.isDarkMode.set(!this.isDarkMode());
     localStorage.setItem('theme', this.isDarkMode() ? 'dark' : 'light');
+  }
+
+  logout() {
+    this.service.signOut();
+    this.user = null;
   }
 }

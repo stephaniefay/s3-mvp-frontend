@@ -3,8 +3,7 @@ import {inject} from '@angular/core';
 import {AuthenticationService} from '../auth/authentication.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthenticationService);
-  const authToken = authService.getToken();
+  const authToken = localStorage.getItem('token');
 
   if (authToken) {
     // Clone the request and add the Authorization header
