@@ -8,13 +8,13 @@ import {ActivatedRoute} from '@angular/router';
   styleUrl: './collections-page.component.css',
 })
 export class CollectionsPage implements OnInit {
-  userId: string | null = null;
+  collectionId: string | null = null;
 
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.userId = this.route.snapshot.paramMap.get('id');
+    this.collectionId = this.route.snapshot.paramMap.get('id');
   }
 
 }

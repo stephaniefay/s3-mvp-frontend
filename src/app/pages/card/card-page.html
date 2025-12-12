@@ -5,13 +5,13 @@
 @if (card) {
   <div class="grid">
     <div class="col-4">
-      <img [src]="card.images.large" [alt]="card.name">
+      <img [src]="card.image + '/high.png'" [alt]="card.name">
     </div>
     <div class="col-8">
       <div #header class="flex justify-content-between align-items-center">
         <span class="text-5xl">{{ card.name }}</span>
         <div class="flex align-items-center gap-5 pr-2">
-          @if (card.supertype.startsWith('Pok')) {
+          @if (card.category.startsWith('Pok')) {
             <div>
               <span class="text-l">HP: </span>
               <span class="text-2xl">{{ card.hp }}</span>
@@ -21,27 +21,23 @@
                 <img [src]="'/types/' + type.toLowerCase() + '.svg'" [alt]="type">
               </div>
             }
-          } @else if (card.supertype.startsWith('Trainer')) {
+          } @else if (card.category.startsWith('Trainer')) {
             <span class="text-2xl">
-              {{ card.subtypes }}
+              {{ card.trainerType }}
             </span>
           }
         </div>
       </div>
       <div #subheader class="flex justify-content-between align-items-center">
-        @if (card.evolvesFrom) {
+        @if (card.evolveFrom) {
           <span class="text-xl pr-2 text-color-secondary">
-            Evolves from: {{ card.evolvesFrom }}
-            @for (subtype of card.subtypes; track subtype) {
-              @if (subtype.startsWith("Stage")) {
-                ({{ subtype }})
-              }
-            }
+            Evolves from: {{ card.evolveFrom }}
+            ({{ card.stage }})
           </span>
         }
 
         <span class="text-xl pr-2 text-color-secondary">
-          Artist: {{ card.artist }}
+          Artist: {{ card.illustrator }}
         </span>
       </div>
       <p-divider></p-divider>
@@ -52,7 +48,7 @@
               <img [src]="'/abilities/' + getImageAbility(ability) + '.png'" [alt]="ability.type" class="ability-type">
               <span class="text-2xl">{{ ability.name }}</span>
             </div>
-            <span class="text-xl">{{ ability.text }}</span>
+            <span class="text-xl">{{ ability.effect }}</span>
           }
         </div>
 
@@ -76,7 +72,7 @@
                 </div>
               </div>
               <div class="text-xl pt-2">
-                {{ attack.text }}
+                {{ attack.effect }}
               </div>
             </div>
           }
@@ -84,16 +80,14 @@
         <p-divider></p-divider>
       }
 
-      @if (card.rules) {
-        <div #ruleBox class="pt-2">
-          @for (rule of card.rules; track $index) {
-            <div class="text-2xl pt-1">{{ rule }}</div>
-          }
+      @if (card.effect) {
+        <div #effectBox class="pt-2">
+          <div class="text-2xl pt-1">{{ card.effect }}</div>
         </div>
         <p-divider></p-divider>
       }
 
-      @if (card.weaknesses || card.resistances || card.retreatCost) {
+      @if (card.weaknesses || card.resistances || card.retreat) {
         <div #info class="grid pt-2 grid-center">
           <div class="col-3">
             <div #weakness class="flex justify-content-between align-items-center">
@@ -116,7 +110,7 @@
               <span class="text-lg">Resistances: </span>
               <div class="flex flex-column">
                 @for (resistance of card.resistances; track $index) {
-                  <div class="flex align-content-end">
+                  <div class="flex align-content-end align-items-center">
                     <div [class]="'type ' + resistance.type.toLowerCase()">
                       <img [src]="'/types/' + resistance.type.toLowerCase() +'.svg'">
                     </div>
@@ -131,7 +125,7 @@
             <div #retreat class="flex justify-content-between align-items-center">
               <span class="text-lg">Retreat: </span>
               <div class="flex">
-                @for (retreat of card.retreatCost; track $index) {
+                @for (retreat of getRetreat(card.retreat); track $index) {
                   <div [class]="'type ' + retreat.toLowerCase()">
                     <img [src]="'/types/' + retreat.toLowerCase() +'.svg'">
                   </div>

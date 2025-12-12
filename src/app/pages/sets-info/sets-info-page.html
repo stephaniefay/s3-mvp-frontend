@@ -9,7 +9,7 @@
 <div class="grid">
   @for (card of filteredCards; track card.id) {
     <div class="col-2">
-      <img [src]="card.images.large" [alt]="card.name" (click)="navigateToCard(card)">
+      <img [src]="card.image + '/low.png'" [alt]="card.name" (click)="navigateToCard(card)">
     </div>
   }
 </div>

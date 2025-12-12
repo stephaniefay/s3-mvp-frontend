@@ -1,4 +1,8 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {LoginResponse} from '../../models/login-response';
+import {User} from '../../models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -6,28 +10,28 @@ import {Injectable} from '@angular/core';
 export class AuthenticationService {
   private token: string | null = null;
 
-  constructor() {
+  private baseUrl = 'http://localhost:8080/authentication';
+
+  constructor(private http: HttpClient) {
     this.token = localStorage.getItem('token'); // Retrieve token on service initialization
   }
 
-  signUp (name: string, accessKey: string, password: string): true {
+  signUp(name: string, accessKey: string, password: string): true {
     console.log(name, accessKey, password);
 
     this.setToken('asd');
     return true;
   }
 
-  signIn (accessKey: string, password: string): boolean {
-    //TODO
-    console.log(accessKey, password);
-
-    this.setToken('asd');
-    return true;
+  signIn(accessKey: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.baseUrl + '/login', {
+      username: accessKey,
+      password: password
+    });
   }
 
-  getUser () {
-    return null;
-//    return {id: 'teste_id_usuario', email: 'all@all.com', nickname: 'sfay', token: 'asd'}
+  getUser(): Observable<User> {
+    return this.http.get<User>(this.baseUrl + '/me');
   }
 
   setToken(token: string): void {

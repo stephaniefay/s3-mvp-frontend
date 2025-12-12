@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {Sets} from '../../../models/sets';
 import {Card} from 'primeng/card';
 import {Divider} from 'primeng/divider';
 import {Button} from 'primeng/button';
 import {RouterLink} from '@angular/router';
+import {Set} from '@tcgdex/sdk'
 
 @Component({
   selector: 'app-set-display-full',
@@ -18,12 +18,23 @@ import {RouterLink} from '@angular/router';
 })
 export class SetDisplayFullComponent {
 
-  @Input() set: Sets | undefined;
+  @Input() set: Set | null = null;
 
-  getSecretRares() {
-    if (this.set != null)
-      return this.set.total - this.set.printedTotal;
-    return '';
+  getSecretRares () {
+    if (this.set) {
+      return this.set.cardCount.total - this.set.cardCount.official;
+    }
+    return null;
+  }
+
+  getLogo() {
+    if (this.set) {
+      if (this.set.logo) {
+        return this.set.logo + '.png';
+      }
+    }
+
+    return '/assets/logo.png';
   }
 
   getLink() {

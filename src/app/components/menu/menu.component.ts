@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {Drawer} from "primeng/drawer";
 import {Button} from 'primeng/button';
 import {AuthenticationService} from '../../services/auth/authentication.service';
@@ -7,7 +7,7 @@ import {Avatar} from 'primeng/avatar';
 import {Tooltip} from 'primeng/tooltip';
 import {Menu} from 'primeng/menu';
 import {Badge} from 'primeng/badge';
-import {MenuItem, MenuItemCommandEvent} from 'primeng/api';
+import {MenuItem, MenuItemCommandEvent, MessageService} from 'primeng/api';
 import {Router} from '@angular/router';
 import {ToggleSwitch} from 'primeng/toggleswitch';
 import {FormsModule} from '@angular/forms';
@@ -27,7 +27,7 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
   visible: boolean = false;
 
   user: User | null = null;
@@ -41,7 +41,8 @@ export class MenuComponent {
   isDarkMode = signal(false);
 
   constructor(private auth: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private messageService: MessageService) {
     const theme = localStorage.getItem('theme');
     this.isDarkMode.set(theme == 'dark');
 
@@ -71,23 +72,6 @@ export class MenuComponent {
               this.router.navigate(['/']);
             }
           },
-          // {
-          //   label: 'Trades',
-          //   icon: 'pi pi-arrow-right-arrow-left',
-          //   routerLink: '/trades',
-          //   command: () => {
-          //     this.visible = false;
-          //     this.router.navigate(['/trades'])
-          //   }
-          // },
-          // {
-          //   label: 'Market',
-          //   icon: 'pi pi-wallet',
-          //   command: () => {
-          //     this.visible = false;
-          //     this.router.navigate(['/market'])
-          //   }
-          //}
         ]
       }
     ];
@@ -117,6 +101,10 @@ export class MenuComponent {
     ]
   }
 
+  ngOnInit() {
+    this.loadUser();
+  }
+
   openMenu() {
     this.visible = true;
   }
@@ -139,13 +127,22 @@ export class MenuComponent {
     });
   }
 
-  loadUser(): User | null {
-    if (this.user == null) {
-      this.user = this.auth.getUser();
+  loadUser() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.auth.getUser().subscribe({
+        next: user => {
+          this.user = user;
+          this.loadUserMenu();
+        },
+        error: error => {
+          console.log(error);
+          this.messageService.add({severity: 'error', summary: error.error});
+        }
+      })
+    } else {
+      this.loadNoUserMenu();
     }
-
-    this.user != null ? this.loadUserMenu() : this.loadNoUserMenu();
-    return this.user;
   }
 
   loadIcon() {

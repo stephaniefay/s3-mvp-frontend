@@ -1,13 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {Sets} from '../../../models/sets';
 import {Card} from 'primeng/card';
-import {Tag} from 'primeng/tag';
+import {SetResume} from '@tcgdex/sdk';
 
 @Component({
   selector: 'app-set-display-mini',
   imports: [
-    Card,
-    Tag
+    Card
   ],
   templateUrl: './set-display-mini.component.html',
   styleUrl: './set-display-mini.component.css',
@@ -15,6 +13,16 @@ import {Tag} from 'primeng/tag';
 export class SetDisplayMiniComponent {
 
   // @ts-ignore
-  @Input() set: Sets;
+  @Input() set: SetResume;
+
+  getSymbol() {
+    if (this.set) {
+      if (this.set.symbol) {
+        return this.set.symbol + '.png';
+      }
+    }
+
+    return '/assets/symbol.png';
+  }
 
 }

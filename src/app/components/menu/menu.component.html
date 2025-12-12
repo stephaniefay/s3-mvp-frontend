@@ -1,7 +1,7 @@
 <p-drawer [(visible)]="visible" [fullScreen]="isMobileDevice()" [style]="{width:'25vw'}">
   <ng-template #header>
     <div style="width: 100%">
-      @if (loadUser() != null) {
+      @if (this.user != null) {
         <div class="flex justify-content-between">
           <div class="flex align-items-center">
             <div class="flex justify-content-around">

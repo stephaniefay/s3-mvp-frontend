@@ -1,0 +1,16 @@
+.avatar {
+  border-radius: 30px;
+  background-image: url(https://img3.stockfresh.com/files/n/nyul/m/16/623420_stock-photo-portrait-of-happy-old-man.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 33vh;
+}
+
+.col-1 img {
+  height: 95%;
+  width: 95%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+}

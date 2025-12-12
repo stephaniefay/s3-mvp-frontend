@@ -1,8 +1,8 @@
 export enum Priority {
-  HIGH = 'HIGH',
-  MEDIUM = 'MEDIUM',
-  LOW = 'LOW',
-  NO_PRIORITY = 'NOPRIORITY',
+  HIGH = 0,
+  MEDIUM = 1,
+  LOW = 2,
+  NO_PRIORITY = 3,
 }
 
 export interface Wishlist {

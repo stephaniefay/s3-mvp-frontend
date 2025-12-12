@@ -7,6 +7,7 @@ import {WishlistsPage} from './pages/wishlists/wishlists-page.component';
 import {SetsInfoPage} from './pages/sets-info/sets-info-page';
 import {CardPage} from './pages/card/card-page';
 import {Login} from './pages/login/login';
+import {ProfilePage} from './pages/profile/profile-page.component';
 
 
 export const routes: Routes = [
@@ -45,5 +46,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login
+  },
+  {
+    path: 'profile/:id',
+    component: ProfilePage
   }
 ];

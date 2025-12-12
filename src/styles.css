@@ -1,13 +1,9 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 
-.center {
-  text-align: center;
-}
-
 body {
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 14px; /* Adjust this value for scaling */
+  font-size: 16px; /* Adjust this value for scaling */
 }
 
 .bug {

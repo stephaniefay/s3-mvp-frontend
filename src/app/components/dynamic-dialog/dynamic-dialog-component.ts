@@ -4,14 +4,11 @@ import {InputGroupAddon} from 'primeng/inputgroupaddon';
 import {InputText} from 'primeng/inputtext';
 import {Select} from 'primeng/select';
 import {FormsModule} from '@angular/forms';
-import {CardsService} from '../../services/cards/cards-service';
 import {Collection} from '../../models/collection';
 import {Wishlist} from '../../models/wishlist';
-import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
-import {Condition, Languages} from '../../models/card';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Tags} from '../../models/tags';
 import {MultiSelect} from 'primeng/multiselect';
-import {PrimeTemplate} from 'primeng/api';
 import {Divider} from 'primeng/divider';
 import {Button} from 'primeng/button';
 
@@ -52,8 +49,7 @@ export class DynamicDialogComponent implements OnInit {
 
   tags: Tags[] = [];
 
-  constructor(private service: CardsService,
-              private config: DynamicDialogConfig,
+  constructor(private config: DynamicDialogConfig,
               private ref: DynamicDialogRef) {
   }
 
@@ -75,17 +71,15 @@ export class DynamicDialogComponent implements OnInit {
   }
 
   getConditions() {
-    return Object.values(Condition);
+    return []
   }
 
   getLanguages() {
-    return Object.values(Languages);
+    return []
   }
 
   getTags () {
-    this.service.loadTags().subscribe(customTags => {
-      this.tags = [... customTags]
-    });
+    this.tags = []
   }
 
   save() {

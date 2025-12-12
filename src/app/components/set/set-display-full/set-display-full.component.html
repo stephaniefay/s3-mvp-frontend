@@ -3,14 +3,14 @@
     <p-card>
       <ng-template #header>
         <div class="text-center img-container">
-          <img [alt]="set.id" [src]="set.images.logo">
+          <img [alt]="set.id" [src]="getLogo()">
         </div>
       </ng-template>
       <ng-template #title>
         <div class="line">
           <span><strong>{{ set.name }}</strong></span>
           <span>
-          ID: <strong>{{ set.id }}</strong> | TCGOnline Code: <strong>{{ set.ptcgoCode }}</strong>
+          ID: <strong>{{ set.id }}</strong> | TCGOnline Code: <strong>{{ set.tcgOnline }}</strong>
           </span>
         </div>
       </ng-template>
@@ -24,12 +24,12 @@
       <p-divider></p-divider>
       <div class="line">
         <span><strong>Series:</strong></span>
-        {{ set.series }}
+        {{ set.serie.name }}
       </div>
       <p-divider></p-divider>
       <div class="line">
         <span><strong>Total Cards:</strong></span>
-        {{ set.printedTotal }} (Secret Rares: {{getSecretRares()}})
+        {{ set.cardCount.total }} (Secret Rares: {{getSecretRares()}})
       </div>
       <ng-template #footer>
         <div class="text-center">

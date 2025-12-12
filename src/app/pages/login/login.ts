@@ -3,6 +3,8 @@ import {Button} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
 import {AuthenticationService} from '../../services/auth/authentication.service';
+import {MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -25,12 +27,28 @@ export class Login {
   name: string | undefined;
 
   constructor(private renderer: Renderer2,
-              private service: AuthenticationService) {
+              private service: AuthenticationService,
+              private messageService: MessageService,
+              private router: Router) {
   }
 
-  signIn () {
+  signIn() {
     if (this.username && this.password) {
-      this.service.signIn(this.username, this.password);
+      this.service.signIn(this.username, this.password).subscribe({
+        next: (data) => {
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+
+            this.router.navigate(['/']);
+          }
+        },
+        error: (error) => {
+          console.error('An error occurred:', error.error.error);
+
+          this.messageService.add({severity: 'error', summary: 'Login failed', detail: error.error.error});
+        },
+        complete: () => {}
+      });
     }
   }
 
@@ -40,9 +58,7 @@ export class Login {
     }
   }
 
-  changeOverlay(overlay:boolean) {
-    console.log('changeOverlay', overlay);
-
+  changeOverlay(overlay: boolean) {
     if (overlay) {
       this.renderer.addClass(this.container.nativeElement, 'right-panel-active')
       this.renderer.addClass(this.signInContainer.nativeElement, 'vanish');
