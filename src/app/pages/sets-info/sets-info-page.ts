@@ -50,19 +50,27 @@ export class SetsInfoPage {
       this.tcgdex.fetchCards(this.setId).then(cards => {
         if (cards) {
           this.cards = cards;
-          this.filteredCards = [... this.cards];
+          this.filteredCards = [...this.cards];
         }
       });
 
       this.items = [
-        { label:  this.setName, routerLink: '../../sets/' + this.setId, queryParams: { name: this.setName } },
+        {label: this.setName, routerLink: '../../sets/' + this.setId, queryParams: {name: this.setName}},
       ];
 
-      this.home = { icon: 'pi pi-home', routerLink: '/' };
+      this.home = {icon: 'pi pi-home', routerLink: '/'};
     }
   }
 
-  navigateToCard (card: CardResume) {
+  getImage(card: CardResume): string {
+    if (card.image) {
+      return card.image + '/low.png'
+    } else {
+      return '/assets/back_card.png';
+    }
+  }
+
+  navigateToCard(card: CardResume) {
     // @ts-ignore
     this.tcgdex.card.get(card.id).then(card => {
       if (card) {
@@ -80,7 +88,7 @@ export class SetsInfoPage {
 
   filterCards() {
     if (this.cards) {
-      this.filteredCards = [... this.filterService.filter(this.cards, ['name', 'id'], this.searchedTerm, 'contains')];
+      this.filteredCards = [...this.filterService.filter(this.cards, ['name', 'id'], this.searchedTerm, 'contains')];
     }
   }
 }

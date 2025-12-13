@@ -5,7 +5,7 @@
 @if (card) {
   <div class="grid">
     <div class="col-4">
-      <img [src]="card.image + '/high.png'" [alt]="card.name">
+      <img [src]="getImage()" [alt]="card.name">
     </div>
     <div class="col-8">
       <div #header class="flex justify-content-between align-items-center">

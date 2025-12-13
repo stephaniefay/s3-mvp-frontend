@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit} from '@angular/core';
 import {Button} from 'primeng/button';
 import {Panel} from 'primeng/panel';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Collection} from '../../models/collection';
+import {AuthenticationService} from '../../services/auth/authentication.service';
+import {User} from '../../models/user';
+import {UserService} from '../../services/user-service/user-service';
 
 @Component({
   selector: 'app-profile',
@@ -19,18 +22,60 @@ export class ProfilePage implements OnInit {
 
   collections: Collection[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  loggedUser: User | null = null;
+  user: User | null = null;
+
+  authentication = inject(AuthenticationService);
+
+  userLogged = effect(() => {
+    const user = this.authentication.user();
+    if (user) {
+      this.loggedUser = user;
+    }
+  });
+
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private service: UserService) {
   }
 
   ngOnInit() {
     this.profileId = this.route.snapshot.paramMap.get('id');
 
-    this.loadCollections();
-    this.loadWishlists();
+    if (this.profileId) {
+      this.loadUser();
+      this.loadCollections();
+      this.loadWishlists();
+    } else {
+      this.router.navigate(['/']);
+    }
+  }
+
+  loadUser() {
+    if (this.profileId) {
+      this.service.getUser(this.profileId).subscribe({
+        next: (data: User) => {
+          this.user = data;
+          this.isSameUser();
+        },
+        error: error => {
+          console.error(error);
+          this.router.navigate(['/']);
+        }
+      })
+    }
   }
 
   isSameUser() {
-    return true;
+    return this.loggedUser && this.user && this.loggedUser.id === this.user.id;
+  }
+
+  addCollection() {
+    console.log('addCollection');
+  }
+
+  addWishlist() {
+    console.log('addwishlist');
   }
 
   editDescription() {

@@ -1,4 +1,4 @@
-import {computed, Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {LoginResponse, RegisterResponse} from '../../models/login-response';
@@ -10,7 +10,7 @@ import {MessageService} from 'primeng/api';
 })
 export class AuthenticationService {
   private _token: string | null = null;
-  private _baseUrl = 'http://localhost:8080/authentication';
+  private _baseUrl = 'http://localhost:8080/authentication/';
   private _user = signal<User | null>(null);
   public user = computed(() => this._user());
 
@@ -31,6 +31,7 @@ export class AuthenticationService {
             severity: 'warning',
             summary: 'Your token expired, please consider signing in again.'
           });
+          this.clearToken();
           this._user.set(null);
         }
       });
@@ -38,7 +39,7 @@ export class AuthenticationService {
   }
 
   signUp(name: string, email: string, accessKey: string, password: string) {
-    this.http.post<RegisterResponse>(this._baseUrl + '/create', {
+    this.http.post<RegisterResponse>(this._baseUrl + 'create', {
       name: name,
       email: email,
       username: accessKey,
@@ -62,7 +63,7 @@ export class AuthenticationService {
   }
 
   signIn(accessKey: string, password: string) {
-    this.http.post<LoginResponse>(this._baseUrl + '/login', {
+    this.http.post<LoginResponse>(this._baseUrl + 'login', {
       username: accessKey,
       password: password
     }).subscribe({
@@ -79,6 +80,8 @@ export class AuthenticationService {
           this.messageService.add({severity: 'error', summary: 'Login failed', detail: error.error.error});
         else
           this.messageService.add({severity: 'error', summary: 'Login failed', detail: error.statusText});
+
+        this.clearToken();
       }
     });
   }
@@ -89,7 +92,7 @@ export class AuthenticationService {
   }
 
   getUser(): Observable<User> {
-    return this.http.get<User>(this._baseUrl + '/me');
+    return this.http.get<User>(this._baseUrl + 'me');
   }
 
   setToken(token: string): void {

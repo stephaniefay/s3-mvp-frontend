@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Navigation, Router} from '@angular/router';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {MenuItem} from 'primeng/api';
@@ -33,10 +33,18 @@ export class CardPage implements OnInit {
   items: MenuItem[] | undefined = [];
   home: MenuItem | undefined;
 
+  service = inject(AuthenticationService);
+
+  userLogged = effect(() => {
+    const user = this.service.user();
+    if (user) {
+      this.user = user;
+    }
+  });
+
   tcgdex: TCGdex | null = null;
 
   constructor(private router: Router,
-              private auth: AuthenticationService,
               private language: LanguageSelectorService,
               private route: ActivatedRoute,
               private dialog: DialogService) {
@@ -70,25 +78,33 @@ export class CardPage implements OnInit {
       this.router.navigate(['/']);
 
     this.home = {icon: 'pi pi-home', routerLink: '/'};
-    this.loadUser();
   }
 
   ngOnInit() {
   }
 
+  getImage() {
+    if (this.card) {
+      if (this.card.image) {
+        return this.card.image + '/high.png'
+      } else {
+        return '/assets/back_card.png';
+      }
+    }
+
+    return '';
+  }
+
   getImageAbility(ability: any): string {
     let newValue = ability.type.replaceAll('é', 'e');
     newValue = newValue.replaceAll('-', '');
+    newValue = newValue.replaceAll(' ', '');
 
-    return newValue.toLowerCase();
-  }
+    newValue = newValue.toLowerCase();
+    if (newValue == 'pokemonpower')
+      newValue = 'pokepower'
 
-  loadUser(): User | null {
-    if (this.user == null) {
-//      this.user = this.auth.getUser();
-    }
-
-    return this.user;
+    return newValue;
   }
 
   addToWishlist() {

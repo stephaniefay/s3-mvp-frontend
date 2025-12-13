@@ -1,59 +1,63 @@
-<div class="grid">
-  <div class="col-2">
-    <div class="avatar"></div>
-  </div>
-  <div class="col-10">
-    <p-panel [toggleable]="true" >
-      <ng-template #header>
-        <span class="font-bold">Nome do Usuário</span>
-      </ng-template>
-      <ng-template #icons>
-        @if (isSameUser()) {
-          <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="editDescription()" />
-        }
-      </ng-template>
-      <p class="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-    </p-panel>
-  </div>
-  <div class="col-12">
-    <p-panel [toggleable]="true">
-      <ng-template #header>
-        Collections
-      </ng-template>
-      <div class="grid">
-        @for (collection of collections; track collection.id) {
-          <div class="col-1">
-            <div class="flex flex-column justify-content-center align-items-center gap-2">
-              <img [src]="collection.cover" [alt]="collection.name">
-              <span>{{collection.name}}</span>
-            </div>
-          </div>
-        }
+@if (user) {
+  <div class="grid">
+    <div class="col-2">
+      <div class="avatar">
+        <img [src]="user.image">
       </div>
-    </p-panel>
-  </div>
+    </div>
+    <div class="col-10">
+      <p-panel [toggleable]="true">
+        <ng-template #header>
+          <div class="flex align-items-center gap-2">
+            <span class="font-bold text-2xl">{{ user.nickname }}</span>
+            <span>a.k.a</span>
+            <span class="font-bold">{{ user.name }}</span>
+          </div>
+        </ng-template>
+        <ng-template #icons>
+          @if (isSameUser()) {
+            <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="editDescription()"/>
+          }
+        </ng-template>
+        <p class="m-0">
+          {{ user.bio }}
+        </p>
+      </p-panel>
+    </div>
+    <div class="col-12">
+      <p-panel [toggleable]="true">
+        <ng-template #header>
+          Collections
+        </ng-template>
+        <ng-template #icons>
+          @if (isSameUser()) {
+            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="addCollection()"/>
+          }
+        </ng-template>
+        <div class="grid">
+          @for (collection of collections; track collection.id) {
+            <div class="col-1">
+              <div class="flex flex-column justify-content-center align-items-center gap-2">
+                <img [src]="collection.cover" [alt]="collection.name">
+                <span>{{ collection.name }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </p-panel>
+    </div>
 
-  <div class="col-12">
-    <p-panel [toggleable]="true">
-      <ng-template #header>
-        Wishlists
-      </ng-template>
-
-    </p-panel>
+    <div class="col-12">
+      <p-panel [toggleable]="true">
+        <ng-template #header>
+          Wishlists
+        </ng-template>
+        <ng-template #icons>
+          @if (isSameUser()) {
+            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="addWishlist()"/>
+          }
+        </ng-template>
+      </p-panel>
+    </div>
   </div>
-</div>
+}

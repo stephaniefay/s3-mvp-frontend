@@ -110,6 +110,11 @@ export class MenuComponent {
     ]
   }
 
+  redirectProfile() {
+    this.visible = false;
+    this.router.navigate(['profile/' + this.user?.id])
+  }
+
   openMenu() {
     this.visible = true;
   }
