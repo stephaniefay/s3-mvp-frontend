@@ -1,8 +1,13 @@
-
 export interface Collection {
   id: string;
   name: string;
   description: string;
   cover: string;
-  isPublic: boolean;
+  isPrivate: boolean;
+  editable: boolean;
+  cards: any[];
+}
+
+export interface CollectionList {
+  collections: Collection[];
 }

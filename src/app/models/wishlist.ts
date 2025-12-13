@@ -9,6 +9,16 @@ export interface Wishlist {
   id: string;
   name: string;
   description: string;
+  cover: string;
+  isPrivate: boolean;
+  editable: boolean;
+
   priority: Priority;
   tags: string[];
+
+  cards: any[];
+}
+
+export interface WishlistList {
+  collections: Wishlist[];
 }

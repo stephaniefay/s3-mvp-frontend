@@ -3,25 +3,70 @@
     <div class="col-2">
       <div class="avatar">
         <img [src]="user.image">
+        @if (isSameUser()) {
+          <button type="button" pButton class="edit-avatar" (click)="editAvatar($event)">
+            <i class="pi pi-pencil" pButtonIcon></i>
+          </button>
+          <p-popover #popOverAvatar>
+            <div class="flex flex-col gap-4 w-[25rem]">
+              <div>
+                <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">You can change your avatar by just adding another link :)</span>
+                <p-inputgroup>
+                  <input pInputText [(ngModel)]="this.changedAvatar" class="w-[25rem]" />
+                  <p-inputgroup-addon>
+                    <p-button icon="pi pi-check" severity="primary" (click)="saveAvatar($event)"/>
+                  </p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+          </p-popover>
+        }
       </div>
     </div>
     <div class="col-10">
       <p-panel [toggleable]="true">
         <ng-template #header>
-          <div class="flex align-items-center gap-2">
+          <div class="flex align-items-center">
             <span class="font-bold text-2xl">{{ user.nickname }}</span>
-            <span>a.k.a</span>
-            <span class="font-bold">{{ user.name }}</span>
+            <span class="pl-2">a.k.a</span>
+            @if (isSameUser()) {
+              <p-inplace #inplaceName (click)="editName()">
+                <ng-template #display>
+                  <span class="font-bold">{{ user.name }}</span>
+                </ng-template>
+                <ng-template #content let-closeCallback="closeCallback">
+                  <span class="inline-flex gap-2">
+                      <input type="text" pInputText [pAutoFocus]="true" [(ngModel)]="changedName"/>
+                      <button type="button" pButton (click)="closeCallback($event)" text severity="danger">
+                          <i class="pi pi-times" pButtonIcon></i>
+                      </button>
+                      <button type="button" pButton (click)="saveName()" text severity="success">
+                          <i class="pi pi-check" pButtonIcon></i>
+                      </button>
+                  </span>
+                </ng-template>
+              </p-inplace>
+            } @else {
+              <span class="font-bold">{{ user.name }}</span>
+            }
           </div>
         </ng-template>
         <ng-template #icons>
           @if (isSameUser()) {
-            <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="editDescription()"/>
+            <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="editBio()"/>
           }
         </ng-template>
-        <p class="m-0">
-          {{ user.bio }}
-        </p>
+        @if (editingBio) {
+          <textarea rows="5" cols="30" pTextarea [(ngModel)]="changedBio" fluid></textarea>
+          <div class="flex justify-content-end gap-2">
+            <button pButton severity="secondary" (click)="editingBio=false"><span pButtonLabel>Cancel</span></button>
+            <button pButton severity="primary" (click)="saveBio()"><span pButtonLabel>Save</span></button>
+          </div>
+        } @else {
+          <p class="m-0">
+            {{ user.bio }}
+          </p>
+        }
       </p-panel>
     </div>
     <div class="col-12">
@@ -57,6 +102,16 @@
             <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="addWishlist()"/>
           }
         </ng-template>
+        <div class="grid">
+          @for (wishlist of wishlists; track wishlist.id) {
+            <div class="col-1">
+              <div class="flex flex-column justify-content-center align-items-center gap-2">
+                <img [src]="wishlist.cover" [alt]="wishlist.name">
+                <span>{{ wishlist.name }}</span>
+              </div>
+            </div>
+          }
+        </div>
       </p-panel>
     </div>
   </div>

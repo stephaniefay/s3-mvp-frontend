@@ -28,7 +28,7 @@ export class AuthenticationService {
         },
         error: error => {
           this.messageService.add({
-            severity: 'warning',
+            severity: 'warn',
             summary: 'Your token expired, please consider signing in again.'
           });
           this.clearToken();
