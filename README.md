@@ -26,8 +26,6 @@ Existem várias maneiras para a execução do projeto, mas para fins avaliativos
 um Dockerfile foi preparado que contém o build da versão de produção do Angular, bem como todas as configurações necessárias.
 
 ### Docker build
-Como informado acima, já que executaremos o docker utilizando a imagem nativa (e portanto totalmente contida) basta executar
-o código abaixo.
 
 ```shell script
 docker build -f docker/Dockerfile -t s3-mvp-frontend .
