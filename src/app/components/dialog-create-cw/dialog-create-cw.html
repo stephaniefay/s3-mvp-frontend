@@ -1,0 +1,49 @@
+<div class="grid">
+  <div class="col-8">
+    <div class="flex-column">
+      <div class="pb-1">
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            @if (this.type == 'collection') {
+              <i class="pi pi-tablet"></i>
+            } @else {
+              <i class="pi pi-star"></i>
+            }
+          </p-inputgroup-addon>
+          <input pInputText [(ngModel)]="name" placeholder="Name"/>
+        </p-inputgroup>
+      </div>
+      <div class="pb-1">
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            <i class="pi pi-image"></i>
+          </p-inputgroup-addon>
+          <input pInputText [(ngModel)]="cover" placeholder="Image Cover URL"/>
+        </p-inputgroup>
+      </div>
+      <div class="taxterea pb-1">
+        <p-floatlabel variant="in">
+          <textarea pTextarea id="in_label" [(ngModel)]="description" [autoResize]="false"
+                    style="resize: none;width: 100%"></textarea>
+          <label for="in_label">Description</label>
+        </p-floatlabel>
+      </div>
+      @if (type == 'collection') {
+        <div class="flex justify-content-end align-items-center">
+          <p-toggleButton [(ngModel)]="isPrivate" onLabel="Private" offLabel="Public" onIcon="pi pi-lock" offIcon="pi pi-lock-open" class="w-36"></p-toggleButton>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="col-4">
+    @if (cover) {
+      <div class="cover">
+        <img [src]="cover" alt="Cover Collection/Wishlist">
+      </div>
+    }
+  </div>
+</div>
+<div class="flex justify-content-end gap-2">
+  <button pButton severity="secondary" (click)="dismiss()"><span pButtonLabel>Cancel</span></button>
+  <button pButton severity="primary" (click)="save()"><span pButtonLabel>Save</span></button>
+</div>

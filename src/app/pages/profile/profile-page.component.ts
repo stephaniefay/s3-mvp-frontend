@@ -16,6 +16,9 @@ import {MessageService} from 'primeng/api';
 import {Popover} from 'primeng/popover';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
+import {DialogService} from 'primeng/dynamicdialog';
+import {DialogCreateCw} from '../../components/dialog-create-cw/dialog-create-cw';
+import {first} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -34,6 +37,7 @@ import {InputGroupAddon} from 'primeng/inputgroupaddon';
     InputGroup,
     InputGroupAddon
   ],
+  providers: [DialogService],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.css',
 })
@@ -68,7 +72,8 @@ export class ProfilePage implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private message: MessageService,
-              private service: UserService) {
+              private service: UserService,
+              private dialog: DialogService) {
   }
 
   ngOnInit() {
@@ -102,12 +107,34 @@ export class ProfilePage implements OnInit {
     return this.loggedUser && this.user && this.loggedUser.id === this.user.id;
   }
 
-  addCollection() {
-    console.log('addCollection');
+  createCollection() {
+    const ref = this.dialog.open(DialogCreateCw, {
+      header: 'Create Collection',
+      width: '50%',
+      contentStyle: {overflow: 'visible'},
+      baseZIndex: 10000,
+      closable: true,
+      data: {type: 'collection'}
+    });
+
+    ref?.onClose.pipe(first()).subscribe((data) => {
+      this.loadCollections();
+    });
   }
 
-  addWishlist() {
-    console.log('addwishlist');
+  createWishlist() {
+    const ref = this.dialog.open(DialogCreateCw, {
+      header: 'Create Wishlist',
+      width: '50%',
+      contentStyle: {overflow: 'visible'},
+      baseZIndex: 10000,
+      closable: true,
+      data: {type: 'wishlist'}
+    });
+
+    ref?.onClose.pipe(first()).subscribe((data) => {
+      this.loadWishlists();
+    });
   }
 
   updateUser(name: string | null, bio: string | null, avatar: string | null) {

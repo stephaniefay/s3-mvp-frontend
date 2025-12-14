@@ -8,7 +8,7 @@ import {User} from '../../models/user';
 import {Button} from 'primeng/button';
 import {Tooltip} from 'primeng/tooltip';
 import {DialogService} from 'primeng/dynamicdialog';
-import {DynamicDialogComponent} from '../../components/dynamic-dialog/dynamic-dialog-component';
+import {DialogAddCW} from '../../components/dialog-add-cw/dialog-add-c-w.component';
 import TCGdex, {Card} from '@tcgdex/sdk'
 import {LanguageSelectorService} from '../../services/language-selector/language-selector-service';
 
@@ -108,7 +108,7 @@ export class CardPage implements OnInit {
   }
 
   addToWishlist() {
-    this.dialog.open(DynamicDialogComponent, {
+    this.dialog.open(DialogAddCW, {
       header: 'Add To Wishlist',
       width: '50%',
       contentStyle: {overflow: 'visible'},
@@ -119,7 +119,7 @@ export class CardPage implements OnInit {
   }
 
   addToCollection() {
-    this.dialog.open(DynamicDialogComponent, {
+    this.dialog.open(DialogAddCW, {
       header: 'Add To Collection',
       width: '50%',
       contentStyle: {overflow: 'visible'},

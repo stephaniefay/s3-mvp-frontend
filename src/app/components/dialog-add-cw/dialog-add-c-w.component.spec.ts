@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DynamicDialogComponent } from './dynamic-dialog-component';
+import { DialogAddCW } from './dialog-add-c-w.component';
 
 describe('DynamicDialogComponent', () => {
-  let component: DynamicDialogComponent;
-  let fixture: ComponentFixture<DynamicDialogComponent>;
+  let component: DialogAddCW;
+  let fixture: ComponentFixture<DialogAddCW>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DynamicDialogComponent]
+      imports: [DialogAddCW]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DynamicDialogComponent);
+    fixture = TestBed.createComponent(DialogAddCW);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

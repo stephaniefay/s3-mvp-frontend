@@ -1,0 +1,12 @@
+.cover img {
+  border-radius: 30px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 33vh;
+}
+
+.taxterea {
+  width: 100%;
+  box-sizing: border-box;
+}

@@ -18,7 +18,7 @@ export enum DefaultTags {
 }
 
 @Component({
-  selector: 'app-dynamic-dialog-component',
+  selector: 'app-add-c-w',
   imports: [
     InputGroup,
     InputGroupAddon,
@@ -29,11 +29,11 @@ export enum DefaultTags {
     Divider,
     Button
   ],
-  templateUrl: './dynamic-dialog-component.html',
-  styleUrl: './dynamic-dialog-component.css',
+  templateUrl: './dialog-add-c-w.component.html',
+  styleUrl: './dialog-add-c-w.component.css',
 })
 
-export class DynamicDialogComponent implements OnInit {
+export class DialogAddCW implements OnInit {
 
   placeholder: 'Collection' | 'Wishlist' = 'Collection';
 

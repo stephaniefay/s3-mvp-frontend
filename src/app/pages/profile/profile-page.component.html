@@ -2,7 +2,7 @@
   <div class="grid">
     <div class="col-2">
       <div class="avatar">
-        <img [src]="user.image">
+        <img [src]="user.image" [alt]="user.nickname">
         @if (isSameUser()) {
           <button type="button" pButton class="edit-avatar" (click)="editAvatar($event)">
             <i class="pi pi-pencil" pButtonIcon></i>
@@ -76,7 +76,7 @@
         </ng-template>
         <ng-template #icons>
           @if (isSameUser()) {
-            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="addCollection()"/>
+            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="createCollection()"/>
           }
         </ng-template>
         <div class="grid">
@@ -99,7 +99,7 @@
         </ng-template>
         <ng-template #icons>
           @if (isSameUser()) {
-            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="addWishlist()"/>
+            <p-button icon="pi pi-plus" severity="secondary" rounded text (click)="createWishlist()"/>
           }
         </ng-template>
         <div class="grid">
