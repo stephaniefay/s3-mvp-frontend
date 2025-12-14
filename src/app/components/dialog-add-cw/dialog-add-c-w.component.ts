@@ -55,7 +55,6 @@ export class DialogAddCW implements OnInit {
 
   ngOnInit() {
     if (this.config.data) {
-      console.log(this.config.data);
       if(this.config.data['type'] == 'wishlist')
         this.placeholder = 'Wishlist';
     }

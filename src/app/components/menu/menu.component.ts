@@ -36,7 +36,6 @@ export class MenuComponent {
 
   loginItem: MenuItem;
   noAuthItems: MenuItem[] = [];
-  authItems: MenuItem[] = [];
 
   isDarkMode = signal(false);
   service = inject(AuthenticationService);
@@ -81,20 +80,12 @@ export class MenuComponent {
               this.router.navigate(['/']);
             }
           },
-        ]
-      }
-    ];
-
-    this.authItems = [
-      {
-        label: 'Your Account',
-        items: [
           {
             label: 'Collections',
-            icon: 'pi pi-heart',
+            icon: 'pi pi-tablet',
             command: () => {
               this.visible = false;
-              this.router.navigate(['/collections/' + this.user?.id])
+              this.router.navigate(['/collections'])
             }
           },
           {
@@ -102,12 +93,12 @@ export class MenuComponent {
             icon: 'pi pi-sparkles',
             command: () => {
               this.visible = false;
-              this.router.navigate(['/wishlists/' + this.user?.id])
+              this.router.navigate(['/wishlists'])
             }
           }
         ]
       }
-    ]
+    ];
   }
 
   redirectProfile() {
@@ -130,9 +121,6 @@ export class MenuComponent {
   loadUserMenu() {
     this.items = [];
     this.noAuthItems.forEach(item => {
-      this.items.push(item);
-    });
-    this.authItems.forEach(item => {
       this.items.push(item);
     });
   }

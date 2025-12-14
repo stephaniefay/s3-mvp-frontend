@@ -8,6 +8,8 @@ import {SetsInfoPage} from './pages/sets-info/sets-info-page';
 import {CardPage} from './pages/card/card-page';
 import {Login} from './pages/login/login';
 import {ProfilePage} from './pages/profile/profile-page.component';
+import {CollectionsInfoPage} from './pages/collections-info/collections-info-page';
+import {WishlistsInfoPage} from './pages/wishlists-info/wishlists-info-page';
 
 
 export const routes: Routes = [
@@ -36,12 +38,20 @@ export const routes: Routes = [
     component: MarketPage
   },
   {
-    path: 'collections/:id',
+    path: 'collections',
     component: CollectionsPage
   },
   {
-    path: 'wishlists/:id',
+    path: 'collections/:id',
+    component: CollectionsInfoPage
+  },
+  {
+    path: 'wishlists',
     component: WishlistsPage
+  },
+  {
+    path: 'wishlists/:id',
+    component: WishlistsInfoPage
   },
   {
     path: 'login',

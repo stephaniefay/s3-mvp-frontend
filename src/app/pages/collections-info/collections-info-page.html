@@ -1,0 +1,94 @@
+<div class="flex justify-content-between align-items-center">
+  <p-breadcrumb [model]="items" [home]="home"/>
+</div>
+
+@if (collection) {
+  <div class="grid pt-2">
+    <div class="col-2">
+      <div class="avatar">
+        <img [src]="collection.cover" [alt]="collection.name">
+        @if (isSameUser()) {
+          <button type="button" pButton class="edit-avatar" (click)="editCover($event)">
+            <i class="pi pi-pencil" pButtonIcon></i>
+          </button>
+          <p-popover #popOverCover>
+            <div class="flex flex-col gap-4 w-[25rem]">
+              <div>
+                <span class="font-medium text-surface-900 dark:text-surface-0 block mb-2">You can change your cover by just adding another link :)</span>
+                <p-inputgroup>
+                  <input pInputText [(ngModel)]="this.changedCover" class="w-[25rem]" />
+                  <p-inputgroup-addon>
+                    <p-button icon="pi pi-check" severity="primary" (click)="saveCover($event)"/>
+                  </p-inputgroup-addon>
+                </p-inputgroup>
+              </div>
+            </div>
+          </p-popover>
+        }
+      </div>
+    </div>
+    <div class="col-10">
+      <p-panel [toggleable]="true">
+        <ng-template #header>
+          <div class="flex align-items-center">
+            @if (isSameUser()) {
+              <p-inplace #inplaceName (click)="editName()">
+                <ng-template #display>
+                  <span class="font-bold text-2xl">{{ collection.name }}</span>
+                </ng-template>
+                <ng-template #content let-closeCallback="closeCallback">
+                  <span class="inline-flex gap-2">
+                      <input type="text" pInputText [pAutoFocus]="true" [(ngModel)]="changedName"/>
+                      <button type="button" pButton (click)="closeCallback($event)" text severity="danger">
+                          <i class="pi pi-times" pButtonIcon></i>
+                      </button>
+                      <button type="button" pButton (click)="saveName()" text severity="success">
+                          <i class="pi pi-check" pButtonIcon></i>
+                      </button>
+                  </span>
+                </ng-template>
+              </p-inplace>
+            } @else {
+              <span class="font-bold text-2xl">{{ collection.name }}</span>
+            }
+
+            @if (user) {
+              <span class="pl-2">by</span>
+
+              <span class="pl-2 font-bold text-2xl">{{ user.nickname }}</span>
+            }
+          </div>
+        </ng-template>
+        <ng-template #icons>
+          @if (isSameUser()) {
+            <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="editDescription()"/>
+          }
+        </ng-template>
+        @if (editingDescription) {
+          <textarea rows="5" cols="30" pTextarea [(ngModel)]="changedDescription" fluid></textarea>
+          <div class="flex justify-content-end gap-2">
+            <button pButton severity="secondary" (click)="editingDescription=false"><span pButtonLabel>Cancel</span></button>
+            <button pButton severity="primary" (click)="saveDescription()"><span pButtonLabel>Save</span></button>
+          </div>
+        } @else {
+          <p class="m-0">
+            {{ collection.description }}
+          </p>
+        }
+      </p-panel>
+    </div>
+  </div>
+  @if (collection.cards.length > 0) {
+  <div class="grid">
+    @for (card of collection.cards; track card.id) {
+      <div class="col-2">
+        <img [src]="getImage(card)" [alt]="card.name">
+      </div>
+    }
+  </div>
+  } @else {
+    <div class="pt-2">
+      <span class="font-bold text-2xl">This collection does not have cards yet.</span>
+    </div>
+  }
+}

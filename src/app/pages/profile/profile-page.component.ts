@@ -1,18 +1,18 @@
 import {Component, effect, inject, OnInit, ViewChild} from '@angular/core';
 import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from 'primeng/button';
 import {Panel} from 'primeng/panel';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {Collection} from '../../models/collection';
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {User} from '../../models/user';
-import {UserService} from '../../services/user-service/user-service';
+import {UserService} from '../../services/user/user-service';
 import {Wishlist} from '../../models/wishlist';
 import {Inplace} from 'primeng/inplace';
 import {AutoFocus} from 'primeng/autofocus';
 import {InputText} from 'primeng/inputtext';
 import {FormsModule} from '@angular/forms';
 import {Textarea} from 'primeng/textarea';
-import {MessageService} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import {Popover} from 'primeng/popover';
 import {InputGroup} from 'primeng/inputgroup';
 import {InputGroupAddon} from 'primeng/inputgroupaddon';
@@ -58,7 +58,6 @@ export class ProfilePage implements OnInit {
   changedAvatar: string | null = null;
 
   authentication = inject(AuthenticationService);
-
   userLogged = effect(() => {
     const user = this.authentication.user();
     if (user) {
@@ -190,7 +189,7 @@ export class ProfilePage implements OnInit {
     if (this.profileId) {
       this.service.getUserCollections(this.profileId).subscribe({
         next: value =>  {
-          this.collections = [... value.collections]
+          this.collections = [... value.cw]
         },
         error: error => {
           console.error(error);
@@ -204,13 +203,32 @@ export class ProfilePage implements OnInit {
     if (this.profileId) {
       this.service.getUserWishlists(this.profileId).subscribe({
         next: value =>  {
-          this.wishlists = [... value.collections]
+          this.wishlists = [... value.cw]
         },
         error: error => {
           console.error(error);
           this.wishlists = [];
         }
       })
+    }
+  }
+
+  navigateCollection(collection: Collection) {
+    if (this.user) {
+      console.log(`Navigating to ${collection.name}`);
+      const items: MenuItem[] = [
+        {label: this.user.name, routerLink: '../../profile/' + this.user.id}
+      ];
+
+      const state: NavigationExtras = {
+        state: {
+          data: {breadcrumb: items, collection: collection}
+        }
+      };
+
+      console.log(state);
+
+      this.router.navigate(['../collections', collection.id], state);
     }
   }
 }

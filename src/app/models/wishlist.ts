@@ -1,3 +1,5 @@
+import {CWCard} from './card';
+
 export enum Priority {
   HIGH = 0,
   MEDIUM = 1,
@@ -7,6 +9,7 @@ export enum Priority {
 
 export interface Wishlist {
   id: string;
+  userId: string;
   name: string;
   description: string;
   cover: string;
@@ -16,9 +19,9 @@ export interface Wishlist {
   priority: Priority;
   tags: string[];
 
-  cards: any[];
+  cards: CWCard[];
 }
 
 export interface WishlistList {
-  collections: Wishlist[];
+  cw: Wishlist[];
 }

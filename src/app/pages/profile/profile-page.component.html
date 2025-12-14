@@ -81,7 +81,7 @@
         </ng-template>
         <div class="grid">
           @for (collection of collections; track collection.id) {
-            <div class="col-1">
+            <div class="col-1 pointer" (click)="navigateCollection(collection)">
               <div class="flex flex-column justify-content-center align-items-center gap-2">
                 <img [src]="collection.cover" [alt]="collection.name">
                 <span>{{ collection.name }}</span>

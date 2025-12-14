@@ -8,7 +8,7 @@ import {InputGroup} from 'primeng/inputgroup';
 import {FloatLabel} from 'primeng/floatlabel';
 import {Textarea} from 'primeng/textarea';
 import { ToggleButton } from 'primeng/togglebutton';
-import {UserService} from '../../services/user-service/user-service';
+import {UserService} from '../../services/user/user-service';
 import {MessageService} from 'primeng/api';
 
 @Component({

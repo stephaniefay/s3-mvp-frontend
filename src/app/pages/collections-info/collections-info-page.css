@@ -29,16 +29,3 @@
   width: 100%;
   min-height: 33vh;
 }
-
-.col-1 img {
-  height: 95%;
-  width: 95%;
-  object-fit: cover;
-  overflow: hidden;
-  border-radius: 50%;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
