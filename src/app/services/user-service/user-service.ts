@@ -4,13 +4,14 @@ import {User} from '../../models/user';
 import {HttpClient} from '@angular/common/http';
 import {CollectionList} from '../../models/collection';
 import {WishlistList} from '../../models/wishlist';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
 
-  private _baseUrl = 'http://localhost:8080/users/';
+  private _baseUrl = environment.baseUrl + 'users/';
 
   constructor(private http: HttpClient){}
 

@@ -1,59 +1,54 @@
-# S3MvpFrontend
+# MyWish frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
+Esse projeto foi gerado usando Angular 20 e [Angular CLI](https://github.com/angular/angular-cli) version 20.3.12.
 
-## Development server
+Ele representa o frontend de uma aplicação voltada para a consulta de cartas de Pokémon, assim como o cadastro
+de novas coleções e listas de desejo de usuários.
 
-To start a local development server, run:
+Nesse momento essa solução representa apenas o MVP, o que significa que há ainda muitas outras alterações a serem feitas
+e features a serem adicionadas.
+
+### Diagrama
+
+![diagrama](diagrama.png)
+
+### API Externa
+
+Conforme a requisição do MVP, esse projeto foi montado pensando em soluções com mais de um serviço conectado,
+sendo assim foi utilizada uma API externa, via SDK, para a requisição das cartas em diversas línguas.
+
+A API, TCGDex, pode ser encontrada no seguinte link [https://tcgdex.dev/](https://tcgdex.dev/) e é uma API opensource
+e gratuita.
+
+## Execução
+
+Existem várias maneiras para a execução do projeto, mas para fins avaliativos da pós (e para a facilidade de execução)
+um Dockerfile foi preparado que contém o build da versão de produção do Angular, bem como todas as configurações necessárias.
+
+### Docker build
+Como informado acima, já que executaremos o docker utilizando a imagem nativa (e portanto totalmente contida) basta executar
+o código abaixo.
+
+```shell script
+docker build -f docker/Dockerfile -t s3-mvp-frontend .
+```
+
+E assim que a finalização do build acontecer, rodar com:
+```shell script
+docker run -p 4200:80 s3-mvp-frontend   
+```
+
+Essa imagem já estará rodando como um angular ``prod`` que possui variáveis de ambiente próprias, incluindo uma conexão direta
+para a rede docker interna, assim garantindo que poderá se conectar com o backend caso ambas as imagens sejam utilizadas em um mesmo
+pod.
+
+A imagem rodará na porta 4200.
+
+### Execução local
+
+Assumindo que você possua o npm instalado na máquina, basta executar
 
 ```bash
+npm install
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

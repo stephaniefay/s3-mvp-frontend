@@ -4,13 +4,15 @@ import {Observable} from 'rxjs';
 import {LoginResponse, RegisterResponse} from '../../models/login-response';
 import {User} from '../../models/user';
 import {MessageService} from 'primeng/api';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private _token: string | null = null;
-  private _baseUrl = 'http://localhost:8080/authentication/';
+  private _baseUrl = environment.baseUrl + 'authentication/';
+
   private _user = signal<User | null>(null);
   public user = computed(() => this._user());
 
