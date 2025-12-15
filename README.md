@@ -27,7 +27,7 @@ um Dockerfile foi preparado que contém o build da versão de produção do Angu
 
 ### Docker build
 
-Tenha certeza de possuir o npm v10+ para poder rodar primeiro o script de importação do projeto.
+Tenha certeza de possuir o npm v10+ e o Angular CLI v20+ para poder rodar primeiro o script de importação do projeto.
 
 ```shell script
 npm install
