@@ -18,6 +18,7 @@ import {Textarea} from 'primeng/textarea';
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {AutoFocus} from 'primeng/autofocus';
 import {CWCard} from '../../models/card';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-collections-info-page',
@@ -131,25 +132,15 @@ export class CollectionsInfoPage implements OnInit {
     return this.loggedUser && this.user && this.loggedUser.id === this.user.id;
   }
 
-  editCover(event:any) {
-    if (this.collection)
-      this.changedCover = this.collection.cover ? this.collection.cover : null;
-
-    this.popOverCover.toggle(event);
-  }
-
-  saveCover(event:any) {
-    console.log('save cover', event);
-    this.popOverCover.toggle(event);
-  }
-
   editName() {
     if (this.collection)
       this.changedName = this.collection.name
   }
 
   saveName() {
-    // close inplace
+    if (this.collectionId)
+      this.updateCollection(this.changedName, null, null, null);
+
     this.inplaceName.deactivate();
   }
 
@@ -161,7 +152,44 @@ export class CollectionsInfoPage implements OnInit {
   }
 
   saveDescription() {
+    if (this.collectionId)
+      this.updateCollection(null, this.changedDescription, null, null);
+
     this.editingDescription = false;
+  }
+
+  editCover(event:any) {
+    if (this.collection)
+      this.changedCover = this.collection.cover ? this.collection.cover : null;
+
+    this.popOverCover.toggle(event);
+  }
+
+  saveCover(event:any) {
+    if (this.collectionId)
+      this.updateCollection(null, null, this.changedCover, null);
+
+    this.popOverCover.toggle(event);
+  }
+
+  togglePrivacy() {
+    if (this.collectionId && this.changedPrivacy)
+      this.updateCollection(null, null, null, this.changedPrivacy)
+  }
+
+  updateCollection(name: string | null, description: string | null, cover: string | null, isPrivate: boolean | null) {
+    if (this.collectionId) {
+      this.cwService.updateCollection(this.collectionId, name, description, cover, isPrivate).subscribe({
+        next: collection => {
+          if (collection) {
+            this.collection = collection;
+          }
+        },
+        error: err => {
+          this.messageService.add({severity: 'error', summary: 'Could not update collection, try again later'});
+        }
+      });
+    }
   }
 
   getImage(card: CWCard): string {
