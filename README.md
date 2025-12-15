@@ -27,14 +27,6 @@ um Dockerfile foi preparado que contém o build da versão de produção do Angu
 
 ### Docker build
 
-Tenha certeza de possuir o npm v10+ e o Angular CLI v20+ para poder rodar primeiro o script de importação do projeto.
-
-```shell script
-npm install
-```
-
-Agora poderemos buildar a imagem antes da execução do container.
-
 ```shell script
 docker build -f docker/Dockerfile -t s3-mvp-frontend .
 ```
