@@ -114,7 +114,7 @@ export class CardPage implements OnInit {
       contentStyle: {overflow: 'visible'},
       baseZIndex: 10000,
       closable: true,
-      data: {type: 'wishlist', card: this.card}
+      data: {type: 'wishlist', card: this.card, userId: this.user?.id}
     });
   }
 
@@ -125,7 +125,7 @@ export class CardPage implements OnInit {
       contentStyle: {overflow: 'visible'},
       baseZIndex: 10000,
       closable: true,
-      data: {type: 'collection', card: this.card}
+      data: {type: 'collection', card: this.card, userId: this.user?.id}
     });
   }
 

@@ -1,1 +1,25 @@
-<p>collections works! {{this.collectionId}}</p>
+<div class="p-3">
+  <p-dataview [value]="cwList" [paginator]="true" [rows]="20">
+    <ng-template #list let-page>
+      <div class="grid">
+        @for (cw of page; track cw.id) {
+          <div class="col-12">
+            <div class="flex align-items-center justify-content-between p-2">
+              <div class="flex align-items-center justify-content-start">
+                <div class="img-container">
+                  <img [src]="getCover(cw)" [alt]="cw.id">
+                </div>
+                <div>
+                  <span class="font-medium text-secondary text-sm">{{ cw.id }}</span>
+                  <div class="text-lg font-medium text-surface-900 dark:text-surface-0 mt-2">{{ cw.name }}</div>
+                </div>
+              </div>
+              <p-button icon="pi pi-eye" class="flex-auto md:flex-initial whitespace-nowrap" label="See Details" (onClick)="navigateTo(cw)"/>
+            </div>
+          </div>
+        }
+      </div>
+    </ng-template>
+  </p-dataview>
+</div>
+

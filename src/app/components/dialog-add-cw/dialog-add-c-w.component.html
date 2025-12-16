@@ -25,7 +25,7 @@
       <p-inputgroup-addon>
         <i class="pi pi-wave-pulse"></i>
       </p-inputgroup-addon>
-      <p-select [(ngModel)]="selectedCondition" [options]="getConditions()" placeholder="Condition"/>
+      <p-select [(ngModel)]="selectedCondition" [options]="conditions" optionLabel="name" placeholder="Condition"/>
     </p-inputgroup>
   </div>
   <div class="col-6">
@@ -33,7 +33,7 @@
       <p-inputgroup-addon>
         <i class="pi pi-language"></i>
       </p-inputgroup-addon>
-      <p-select [(ngModel)]="selectedLanguage" [options]="getLanguages()" placeholder="Language"/>
+      <p-select [(ngModel)]="selectedLanguage" [options]="languages" optionLabel="name" placeholder="Language"/>
     </p-inputgroup>
   </div>
   <div class="col-6">
@@ -41,10 +41,21 @@
       <p-inputgroup-addon>
         <i class="pi pi-tags"></i>
       </p-inputgroup-addon>
-      <p-multiselect [(ngModel)]="selectedTags" [options]="tags" optionLabel="name" placeholder="Tags">
+      <p-multiselect [(ngModel)]="selectedTags" [options]="tags" optionLabel="name" placeholder="Tag">
       </p-multiselect>
     </p-inputgroup>
   </div>
+  @if (placeholder == 'Wishlist') {
+    <div class="col-6">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-arrow-up"></i>
+        </p-inputgroup-addon>
+        <p-select [(ngModel)]="selectedPriority" [options]="priorities" optionLabel="name" placeholder="Priority">
+        </p-select>
+      </p-inputgroup>
+    </div>
+  }
 </div>
 <p-divider></p-divider>
 <div class="flex gap-2 justify-content-end">

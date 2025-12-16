@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Collection, CollectionList} from '../../models/collection';
-import {Wishlist, WishlistList} from '../../models/wishlist';
+import {CWList, CollectWish} from '../../models/collectWish';
+import {CardList, CWCard} from '../../models/card';
 
 @Injectable({
   providedIn: 'root',
@@ -14,28 +14,40 @@ export class CWService {
 
   constructor(private http: HttpClient){}
 
-  getAllCollections(page: number = 1, size: number = 20): Observable<CollectionList>{
-    return this.http.get<CollectionList>(this._baseUrl + 'collections');
+  getGenericCW(id: string): Observable<CollectWish> {
+    return this.http.get<CollectWish>(this._baseUrl + id);
   }
 
-  getCollectionById(id: string): Observable<Collection> {
-    return this.http.get<Collection>(this._baseUrl + 'collections/' + id);
+  getAllCollections(): Observable<CWList>{
+    return this.http.get<CWList>(this._baseUrl + 'collections');
   }
 
-  getAllWishlists(page: number = 1, size: number = 20): Observable<WishlistList>{
-    return this.http.get<WishlistList>(this._baseUrl + 'wishlists');
+  getCollectionById(id: string): Observable<CollectWish> {
+    return this.http.get<CollectWish>(this._baseUrl + 'collections/' + id);
   }
 
-  getWishlistById(id: string): Observable<Wishlist> {
-    return this.http.get<Wishlist>(this._baseUrl + 'wishlists/' + id);
+  getAllWishlists(): Observable<CWList>{
+    return this.http.get<CWList>(this._baseUrl + 'wishlists');
   }
 
-  updateCollection (id: string, name: string | null, description: string | null, cover: string | null, isPrivate: boolean | null) : Observable<Collection> {
-    return this.http.patch<Collection>(this._baseUrl + 'collections/' + id, {name: name, description: description, isPrivate: isPrivate, cover: cover, type: 'collection'});
+  getWishlistById(id: string): Observable<CollectWish> {
+    return this.http.get<CollectWish>(this._baseUrl + 'wishlists/' + id);
   }
 
-  updateWishlist (id: string, name: string | null, description: string | null, cover: string | null) : Observable<Collection> {
-    return this.http.patch<Collection>(this._baseUrl + 'wishlists/' + id, {name: name, description: description, isPrivate: false, cover: cover, type: 'wishlist'});
+  updateCollection (id: string, name: string | null, description: string | null, cover: string | null, isPrivate: boolean | null) : Observable<CollectWish> {
+    return this.http.patch<CollectWish>(this._baseUrl + 'collections/' + id, {name: name, description: description, isPrivate: isPrivate, cover: cover, type: 'collection'});
+  }
+
+  updateWishlist (id: string, name: string | null, description: string | null, cover: string | null) : Observable<CollectWish> {
+    return this.http.patch<CollectWish>(this._baseUrl + 'wishlists/' + id, {name: name, description: description, isPrivate: false, cover: cover, type: 'wishlist'});
+  }
+
+  loadAllCards (id: string) : Observable<CardList> {
+    return this.http.get<CardList>(this._baseUrl + id + '/cards');
+  }
+
+  addCardToCW (id: string, type: string, card: CWCard) : Observable<any> {
+    return this.http.put(this._baseUrl + id + '/cards/add', card, {params: {type: type}});
   }
 
 }

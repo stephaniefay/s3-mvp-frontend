@@ -1,0 +1,11 @@
+.img-container {
+  height: 20vh;
+}
+
+.img-container img {
+  height: 95%;
+  width: 95%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 50%;
+}

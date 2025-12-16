@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WishlistsInfoPage } from './wishlists-info-page';
+import { CWInfoPage } from './c-w-info-page.component';
 
-describe('WishlistsInfoPage', () => {
-  let component: WishlistsInfoPage;
-  let fixture: ComponentFixture<WishlistsInfoPage>;
+describe('CollectionsInfoPage', () => {
+  let component: CWInfoPage;
+  let fixture: ComponentFixture<CWInfoPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WishlistsInfoPage]
+      imports: [CWInfoPage]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(WishlistsInfoPage);
+    fixture = TestBed.createComponent(CWInfoPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

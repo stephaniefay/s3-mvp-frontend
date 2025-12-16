@@ -2,11 +2,10 @@ import {Component, effect, inject, OnInit, ViewChild} from '@angular/core';
 import {Button, ButtonDirective, ButtonIcon, ButtonLabel} from 'primeng/button';
 import {Panel} from 'primeng/panel';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
-import {Collection} from '../../models/collection';
+import {CollectWish} from '../../models/collectWish';
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {User} from '../../models/user';
 import {UserService} from '../../services/user/user-service';
-import {Wishlist} from '../../models/wishlist';
 import {Inplace} from 'primeng/inplace';
 import {AutoFocus} from 'primeng/autofocus';
 import {InputText} from 'primeng/inputtext';
@@ -45,8 +44,8 @@ export class ProfilePage implements OnInit {
 
   profileId: string | null = null;
 
-  collections: Collection[] = [];
-  wishlists: Wishlist[] = [];
+  collections: CollectWish[] = [];
+  wishlists: CollectWish[] = [];
 
   loggedUser: User | null = null;
   user: User | null = null;
@@ -213,22 +212,27 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  navigateCollection(collection: Collection) {
+  navigateTo(cw: CollectWish) {
     if (this.user) {
-      console.log(`Navigating to ${collection.name}`);
       const items: MenuItem[] = [
         {label: this.user.name, routerLink: '../../profile/' + this.user.id}
       ];
 
       const state: NavigationExtras = {
         state: {
-          data: {breadcrumb: items, collection: collection}
+          data: {breadcrumb: items, cw: cw}
         }
       };
 
-      console.log(state);
+      this.router.navigate(['../cw', cw.id], state);
+    }
+  }
 
-      this.router.navigate(['../collections', collection.id], state);
+  getCover (cw: CollectWish): string {
+    if (cw.cover) {
+      return cw.cover;
+    } else {
+      return '/assets/no-cover-cw.png'
     }
   }
 }
