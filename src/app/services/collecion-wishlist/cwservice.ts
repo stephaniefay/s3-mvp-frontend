@@ -50,4 +50,8 @@ export class CWService {
     return this.http.put(this._baseUrl + id + '/cards/add', card, {params: {type: type}});
   }
 
+  removeCardFromCW(id: string, cardId: string): Observable<any> {
+    return this.http.delete(this._baseUrl + id + '/cards/remove/' + cardId);
+  }
+
 }

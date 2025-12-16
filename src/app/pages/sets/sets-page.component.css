@@ -1,4 +1,11 @@
+.same-height {
+  grid-auto-rows: 1fr !important;
+}
 
 .clicker:hover {
   cursor: pointer;
+}
+
+.blocking {
+  display: block;
 }

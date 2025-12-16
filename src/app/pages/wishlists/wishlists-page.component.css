@@ -1,9 +1,5 @@
-.img-container {
-  height: 20vh;
-}
-
 .img-container img {
-  height: 95%;
+  height: 13vh;
   width: 95%;
   object-fit: cover;
   overflow: hidden;

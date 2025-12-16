@@ -79,10 +79,12 @@
       </p-panel>
       <div class="flex justify-content-end align-items-center pt-2">
         @if (isSameUser() && cw.type == Type.COLLECTION) {
-          <p-toggleButton [(ngModel)]="changedPrivacy" (click)="togglePrivacy()" onLabel="Private" offLabel="Public" onIcon="pi pi-lock"
+          <p-toggleButton [(ngModel)]="changedPrivacy" (click)="togglePrivacy()" onLabel="Private" offLabel="Public"
+                          onIcon="pi pi-lock"
                           offIcon="pi pi-lock-open" class="w-36"></p-toggleButton>
         } @else {
-          <p-toggleButton [(ngModel)]="changedPrivacy" [disabled]="true" onLabel="Private" offLabel="Public" onIcon="pi pi-lock"
+          <p-toggleButton [(ngModel)]="changedPrivacy" [disabled]="true" onLabel="Private" offLabel="Public"
+                          onIcon="pi pi-lock"
                           offIcon="pi pi-lock-open" class="w-36"></p-toggleButton>
         }
       </div>
@@ -92,13 +94,37 @@
     <div class="grid">
       @for (card of cards; track card.id) {
         <div class="col-2">
-          <img [src]="card.image" [alt]="card.name">
+          <div class="container">
+            <img [src]="card.image" [alt]="card.name">
+            <div class="overlay">
+              <p><strong>Name:</strong> {{card.name}}</p>
+              <p><strong>Condition:</strong> {{getCondition(card.condition)}}</p>
+              <p><strong>Language:</strong> {{convertToFlag(card.language)}}</p>
+              @if (card.tags) {
+                <p><strong>Tags:</strong> {{card.tags}}</p>
+              }
+            </div>
+          </div>
+          @if (isSameUser()) {
+            <div class="flex justify-content-center gap-2">
+              <p-button icon="pi pi-search-plus" [rounded]="true" [text]="true" severity="info" pTooltip="See card"
+                        tooltipPosition="top" size="large" (click)="navigateTo(card)"/>
+              <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger"
+                        [pTooltip]="'Remove from ' + cw.type"
+                        tooltipPosition="top" size="large" (click)="removeFromCW(card)"/>
+            </div>
+          } @else {
+            <div class="flex justify-content-center gap-2">
+              <p-button icon="pi pi-search-plus" [rounded]="true" [text]="true" severity="info" pTooltip="See card"
+                        tooltipPosition="top" size="large" (click)="navigateTo(card)"/>
+            </div>
+          }
         </div>
       }
     </div>
   } @else {
     <div class="pt-2">
-      <span class="font-bold text-2xl">This {{cw?.type}} does not have cards yet.</span>
+      <span class="font-bold text-2xl">This {{ cw?.type }} does not have cards yet.</span>
     </div>
   }
 }

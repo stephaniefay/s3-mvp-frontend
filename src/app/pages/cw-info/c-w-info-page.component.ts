@@ -1,5 +1,5 @@
 import {Component, effect, inject, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Navigation, Router} from '@angular/router';
+import {ActivatedRoute, Navigation, NavigationExtras, Router} from '@angular/router';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {CollectWish, Type} from '../../models/collectWish';
@@ -17,8 +17,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Textarea} from 'primeng/textarea';
 import {AuthenticationService} from '../../services/auth/authentication.service';
 import {AutoFocus} from 'primeng/autofocus';
-import {CWCard} from '../../models/card';
+import {Condition, CWCard} from '../../models/card';
 import {ToggleButton} from 'primeng/togglebutton';
+import {Tooltip} from 'primeng/tooltip';
 
 @Component({
   selector: 'app-collections-info-page',
@@ -38,7 +39,8 @@ import {ToggleButton} from 'primeng/togglebutton';
     Textarea,
     FormsModule,
     AutoFocus,
-    ToggleButton
+    ToggleButton,
+    Tooltip
   ],
   templateUrl: './c-w-info-page.component.html',
   styleUrl: './c-w-info-page.component.css',
@@ -92,7 +94,7 @@ export class CWInfoPage implements OnInit {
         this.cw = data['cw'];
 
         if (this.cw)
-          this.items.push({label: this.cw.name})
+          this.items.push({label: this.cw.name, routerLink: '../../cw/' + this.cw.id, state: state});
       }
     }
 
@@ -170,14 +172,14 @@ export class CWInfoPage implements OnInit {
     this.editingDescription = false;
   }
 
-  editCover(event:any) {
+  editCover(event: any) {
     if (this.cw)
       this.changedCover = this.cw.cover ? this.cw.cover : null;
 
     this.popOverCover.toggle(event);
   }
 
-  saveCover(event:any) {
+  saveCover(event: any) {
     if (this.cwId)
       this.updateCW(null, null, this.changedCover, null);
 
@@ -225,7 +227,7 @@ export class CWInfoPage implements OnInit {
     }
   }
 
-  getCover (cw: CollectWish): string {
+  getCover(cw: CollectWish): string {
     if (cw.cover) {
       return cw.cover;
     } else {
@@ -239,13 +241,85 @@ export class CWInfoPage implements OnInit {
     }
   }
 
-  loadCards () {
+  loadCards() {
     if (this.cwId)
       this.cwService.loadAllCards(this.cwId).subscribe({
         next: cards => {
-          this.cards = [... cards.cards];
+          this.cards = [...cards.cards];
+
+          if (this.cw && this.cw.type == Type.WISHLIST) {
+            this.cards.sort((a, b) => {
+              const valA = a.priority ?? Infinity;
+              const valB = b.priority ?? Infinity;
+
+              return valA - valB;
+            });
+          }
         }
       })
+  }
+
+  removeFromCW(card: CWCard) {
+    if (this.cwId && card.id && this.isSameUser()) {
+      this.cwService.removeCardFromCW(this.cwId, card.id).subscribe({
+        next: suc => {
+          this.loadCards();
+          this.messageService.add({severity: 'success', summary: 'Card removed successfully!'});
+        },
+        error: err => {
+          this.messageService.add({severity: 'error', summary: 'Could not remove card from ' + this.cw?.type + ', try again later'});
+        }
+      })
+    }
+  }
+
+  navigateTo(card: CWCard) {
+    if (card) {
+      const aux = {breadcrumb: this.items}
+      const state: NavigationExtras = {
+        state: {
+          data: aux
+        }
+      };
+
+      this.router.navigate(['/cards', card.externalId], state);
+    }
+  }
+
+  getCondition(condition: number) {
+    switch (condition) {
+      case Condition.MINT:
+        return 'Mint';
+      case Condition.NEAR_MINT:
+        return 'Near Mint';
+      case Condition.SLIGHTLY_PLAYED:
+        return 'Slightly Played';
+      case Condition.MODERATELY_PLAYED:
+        return 'Moderately Played';
+      case Condition.HEAVILY_PLAYED:
+        return 'Heavily Played';
+      case Condition.DAMAGED:
+        return 'Damaged';
+      default:
+        return 'No condition';
+    }
+  }
+
+  convertToFlag(language: string) {
+    if (language.length !== 2) {
+      return '';
+    }
+
+    if(language == 'pt')
+      language = 'br'
+
+    const base = 127397;
+    const codePoints = language
+      .toUpperCase()
+      .split('')
+      .map(char => base + char.charCodeAt(0));
+
+    return String.fromCodePoint(...codePoints);
   }
 
   protected readonly Type = Type;
