@@ -28,7 +28,7 @@ um Dockerfile foi preparado que contém o build da versão de produção do Angu
 ### Docker build
 
 ```shell script
-docker build -f docker/Dockerfile -t s3-mvp-frontend .
+docker build -t s3-mvp-frontend .
 ```
 
 E assim que a finalização do build acontecer, rodar com:
