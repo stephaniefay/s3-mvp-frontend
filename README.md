@@ -25,23 +25,15 @@ e gratuita.
 Existem várias maneiras para a execução do projeto, mas para fins avaliativos da pós (e para a facilidade de execução)
 um Dockerfile foi preparado que contém o build da versão de produção do Angular, bem como todas as configurações necessárias.
 
-### Docker build
+### Docker compose
+
+A execução é tão simples quanto rodar 
 
 ```shell script
-docker build -t s3-mvp-frontend .
+docker compose up
 ```
 
-E assim que a finalização do build acontecer, rodar com:
-
-```shell script
-docker run -p 4200:80 s3-mvp-frontend   
-```
-
-Essa imagem já estará rodando como um angular ``prod`` que possui variáveis de ambiente próprias, incluindo uma conexão direta
-para a rede docker interna, assim garantindo que poderá se conectar com o backend caso ambas as imagens sejam utilizadas em um mesmo
-pod.
-
-A imagem rodará na porta 4200.
+O frontend estará rodando no path [http://localhost:4200](http://localhost:4200).
 
 ### Execução local
 

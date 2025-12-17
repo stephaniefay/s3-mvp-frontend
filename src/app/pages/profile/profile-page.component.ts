@@ -235,4 +235,11 @@ export class ProfilePage implements OnInit {
       return '/assets/no-cover-cw.png'
     }
   }
+
+  getImage (): string {
+    if (this.user && this.user.image) {
+      return this.user.image;
+    }
+    return '/assets/no-cover-cw.png';
+  }
 }

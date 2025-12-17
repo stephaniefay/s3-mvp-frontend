@@ -2,7 +2,7 @@
   <div class="grid same-height">
     <div class="col-2">
       <div class="avatar">
-        <img [src]="user.image" [alt]="user.nickname">
+        <img [src]="getImage()" [alt]="user.nickname">
         @if (isSameUser()) {
           <button type="button" pButton class="edit-avatar" (click)="editAvatar($event)">
             <i class="pi pi-pencil" pButtonIcon></i>
