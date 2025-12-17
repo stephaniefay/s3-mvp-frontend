@@ -20,6 +20,11 @@ sendo assim foi utilizada uma API externa, via SDK, para a requisição das cart
 A API, TCGDex, pode ser encontrada no seguinte link [https://tcgdex.dev/](https://tcgdex.dev/) e é uma API opensource
 e gratuita.
 
+#### Rotas utilizadas
+* ``GET: https://api.tcgdex.net/v2/<language>/cards/<card-id>``: Busca de carta por ID
+* ``GET: https://api.tcgdex.net/v2/<language>/sets``: Listar todos os sets
+* ``GET: https://api.tcgdex.net/v2/<language>/sets/<set-id>``: Buscar cartas de um set por ID
+
 ## Execução
 
 Existem várias maneiras para a execução do projeto, mas para fins avaliativos da pós (e para a facilidade de execução)
