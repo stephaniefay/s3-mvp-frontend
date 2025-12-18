@@ -1,18 +1,25 @@
 <div class="flex justify-content-end p-2">
-  <p-iconfield>
-    <p-inputicon class="pi pi-search" />
-    <input type="text" pInputText placeholder="Search" (keyup)="filterSets()" [(ngModel)]="searchedTerm"/>
-  </p-iconfield>
+  <p-inputgroup>
+    <p-inputgroup-addon>
+      <i class="pi pi-filter"></i>
+    </p-inputgroup-addon>
+    <p-select [options]="series" [(ngModel)]="selectedSerie" (onChange)="goToSection()"
+              [style]="{'width': '100%', 'z-index': '10'}" placeholder="Select serie"></p-select>
+  </p-inputgroup>
 </div>
 
 
 <div class="grid pt-2">
   <div class="lg:col-8 md:col-12 sm:col-12">
     <div class="grid">
-      @for (set of filteredSets; track set.id) {
-        <div class="lg:col-6 md:col-6 sm:col-12 same-height align-content-center">
-          <app-set-display-mini [set]="set" (click)="cardClick(set)" class="clicker blocking"></app-set-display-mini>
-        </div>
+      @for (serie of serieMap | keyvalue; track serie.key) {
+          <p-divider [id]="serie.key" align="center" type="solid">{{ serie.key }}</p-divider>
+          @for (set of serie.value; track set.id) {
+            <div class="lg:col-6 md:col-6 sm:col-12 same-height align-content-center">
+              <app-set-display-mini [set]="set" (click)="cardClick(set)"
+                                    class="clicker blocking"></app-set-display-mini>
+            </div>
+          }
       }
     </div>
   </div>
