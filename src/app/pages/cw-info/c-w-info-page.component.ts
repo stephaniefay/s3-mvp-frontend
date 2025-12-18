@@ -242,7 +242,7 @@ export class CWInfoPage implements OnInit {
   }
 
   loadCards() {
-    if (this.cwId)
+    if (this.cwId) {
       this.cwService.loadAllCards(this.cwId).subscribe({
         next: cards => {
           this.cards = [...cards.cards];
@@ -255,8 +255,11 @@ export class CWInfoPage implements OnInit {
               return valA - valB;
             });
           }
+        }, error: err => {
+          this.cards = [];
         }
       })
+    }
   }
 
   removeFromCW(card: CWCard) {
